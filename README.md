@@ -1,1 +1,3 @@
-# pokemonQMonteCarloBot
+# Pokemon Q Learning Monte Carlo Agent
+This repository contains all code written for the project in my third year studying Computer Science at the University of Warwick (2020-23)
+The title of the project is Combining Reinforcement Learning and Monte Carlo Search Algorithms for Pokémon Battling. The aim is to develop a set of agents that can be used for Pokemon Battles on Pokemon Showdown that use Q learning and later transition to using Monte Carlo search and evaluate them against each other, some simple bots and against human players.
