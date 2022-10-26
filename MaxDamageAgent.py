@@ -1,4 +1,4 @@
-from poke_env import Player
+from poke_env.player import Player
 
 class MaxDamagePlayer(Player):
     
