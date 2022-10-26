@@ -1,13 +1,15 @@
 import asyncio
+from MaxDamageAgent import MaxDamagePlayer
 from tabulate import tabulate
 from poke_env.player import cross_evaluate
 from RandomAgent import makeRandomPlayer
 
 async def main():
     players = []
-    for i in range(0,5):
+    for i in range(0,1):
         players.append(makeRandomPlayer())
-        
+        maxdam = MaxDamagePlayer(battle_format = "gen8randombattle")
+    players.append(maxdam)
     challenges = 10
     
     
