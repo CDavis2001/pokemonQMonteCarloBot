@@ -16,9 +16,14 @@ class MaxDamagePlanPlayer(Player):
         if Active.damage_multiplier(OpActive.type_1) > 1.0:
             print ("bad matchup")
             # switch
-                
+            possible_switches = battle.available_switches()
+            modifier = 4
             
-        
+            for poke in possible_switches:
+                if poke.damage_multiplier(OpActive.type_1) < modifier:
+                    switch = poke
+                    modifier = poke.damage_multiplier(OpActive.type_1)
+            return self.create_order(switch)
         
         # If not switching, pick the move with the highest effective
         # base power
