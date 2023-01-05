@@ -4,6 +4,8 @@ from poke_env.environment import Pokemon
 from utility import *
 
 class QLearningPlayer(Player):
+    def __init(self):
+        self.previous_battle = None
     
     # self, battle -> move order
     # creates a move order to send to the server
@@ -11,6 +13,7 @@ class QLearningPlayer(Player):
         # embed battle
         
         # check if 
+        self.previous_battle = battle
         return None
     
     # self, battle -> observation
@@ -40,12 +43,16 @@ class QLearningPlayer(Player):
         return observation
     
     # self, battle, move -> float
+    
     def get_utility(self, battle, move):
+        # 
         return 0
     
     # self, battlePrevious, battleCurrent -> float
     
-    def calc_utility(self, battlePrevious, battleCurrent):
-        return 0
+    def calc_utility(self, battle_current):
+        a = calc_utility_of_state(self.previous_battle)
+        b = calc_utility_of_state(battle_current)
+        return b-a
     
     
