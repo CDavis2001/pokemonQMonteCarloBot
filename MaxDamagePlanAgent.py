@@ -29,8 +29,13 @@ class MaxDamagePlanPlayer(Player):
         # base power
         if battle.available_moves:
             # Finds the best move among available ones
-           best_move = max(battle.available_moves, key = lambda move: move.base_power)
-           return self.create_order(best_move)
+            for move in battle.available_moves:
+                power = move.base_power
+                if move.type == Active.type_1:
+                    power = power * 1.5
+                    
+            best_move = max(battle.available_moves, key = lambda move: move.base_power)
+            return self.create_order(best_move)
        
         else:
             return self.choose_random_move(battle)
