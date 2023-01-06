@@ -15,30 +15,43 @@ class QLearningPlayer(Player):
         
         # check if 
         self.previous_battle = battle
-        return None
+        
+        observation = QLearningPlayer.embed_battle(battle)
+        KB = open("tempKB.json", "a")
+        KB.write(json.dumps(observation))
+        KB.write(",\n")
+        KB.close()
+        return self.choose_random_move(battle)
     
     # self, battle -> observation
     # converts specific battle instance into observation
-    def embed_battle(self, battle):
+    def embed_battle(battle):
         # attributes we want to track
         # type matchup modifier, effective base powers
         
-        active = battle.active_pokemon()
-        moves = battle.avaiable_moves()
-        switches = battle.available_switches()
-        op_team = battle.opponent_team()
+        active = battle.active_pokemon
+        op_team = battle.opponent_team
         
-        observation = "{ active_pokemon : { species : "
-        observation = observation + active.species + ", hp : "
-        observation = observation + str(active.current_hp / active.max_hp) + " }, opponent_team : ["
-        for pokemon in op_team:
+        observation = "{ 'active_pokemon' : { 'species' : '"
+        observation = observation + active.species + "', 'hp' : "
+        observation = observation + str(active.current_hp / active.max_hp) + " }, 'opponent_team' : ["
+        for key in op_team:
+            pokemon = op_team[key]
             if not pokemon.fainted:
-                observation = observation + "{ species : " + pokemon.species + ", ability : " + pokemon.ability + ", item : " + pokemon.item + ", hp : " + str(pokemon.current_hp / pokemon.max_hp) + "},"
+                if pokemon.item == None:
+                    item = "unknown"
+                else:
+                    item = pokemon.item
+                if pokemon.ability == None:
+                    ability = "unknown"
+                else:
+                    ability = pokemon.ability
+                observation = observation + "{ 'species' : '" + pokemon.species + "', 'ability' : '" + ability + "', 'item' : '" + item + "', 'hp' : " + str(pokemon.current_hp / pokemon.max_hp) + "},"
         # remove last comma
         observation = observation.rstrip(observation[-1])
-        observation = observation + "}"
+        observation = observation + "]}"
     
-        return observation
+        return eval(observation)
     
     # self, battle, move -> float
     
