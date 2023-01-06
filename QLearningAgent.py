@@ -2,6 +2,7 @@ from poke_env.player import Player
 from poke_env.environment import Battle
 from poke_env.environment import Pokemon
 from utility import *
+import json
 
 class QLearningPlayer(Player):
     def __init(self):
@@ -21,25 +22,22 @@ class QLearningPlayer(Player):
     def embed_battle(self, battle):
         # attributes we want to track
         # type matchup modifier, effective base powers
-        observation = []
-        index = 0
-        observation[index] = calcPokeMatchUpModifier(battle.active_pokemon, battle.opponent_active_pokemon)
-        index+=1
-        observation[index] = len(battle.available_switches())
-        index+=1
-        i = 0
-        for move in battle.available_moves():
-            base_power = move.base_power
-            # check for same type attack bonus
-            if move.type == battle.active_pokemon.type_1:
-               base_power = base_power * 1.5
-            elif battle.active_pokemon.type_2:
-                if move.type == battle.active_pokemon.type_2:
-                   base_power = base_power * 1.5
-            base_power = base_power * battle.opponent_active_pokemon.damage_multiplier(move.type)
-            observation[index + i]
-            i+=1
-            
+        
+        active = battle.active_pokemon()
+        moves = battle.avaiable_moves()
+        switches = battle.available_switches()
+        op_team = battle.opponent_team()
+        
+        observation = "{ active_pokemon : { species : "
+        observation = observation + active.species + ", hp : "
+        observation = observation + str(active.current_hp / active.max_hp) + " }, opponent_team : ["
+        for pokemon in op_team:
+            if not pokemon.fainted:
+                observation = observation + "{ species : " + pokemon.species + ", ability : " + pokemon.ability + ", item : " + pokemon.item + ", hp : " + str(pokemon.current_hp / pokemon.max_hp) + "},"
+        # remove last comma
+        observation = observation.rstrip(observation[-1])
+        observation = observation + "}"
+    
         return observation
     
     # self, battle, move -> float
