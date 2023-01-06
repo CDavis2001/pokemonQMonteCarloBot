@@ -1,0 +1,16 @@
+{ "memory" :
+    {"observation" : {
+        "active_pokemon" : {
+            "species" : "pkmn",
+            "hp" : 100               
+        },
+        "opponent_team" : [
+            {"species" : "pkmn", "ability" : "intim", "item" : "lifeorb", "hp" : 100}
+        ]
+        },
+    "actions" : [
+        {"action" : "tackle", "utility" : 1},
+        {"action" : "switch_slowbro", "utility" : 0.8}
+    ]
+}
+}
