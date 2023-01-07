@@ -3,11 +3,15 @@ from MaxDamagePlanAgent import MaxDamagePlanPlayer
 from tabulate import tabulate
 from poke_env.player import cross_evaluate
 from RandomAgent import makeRandomPlayer
+from QLearningAgent import QLearningPlayer
 
 from poke_env import PlayerConfiguration, ShowdownServerConfiguration
 
 async def main():
-    player = MaxDamagePlanPlayer(battle_format="gen8randombattle")
+    file = open("Teams/BeatUpOffenceTeam.txt")
+    team = file.read()
+    file.close()
+    player = MaxDamagePlanPlayer(battle_format="gen8ou",team=team)
     await player.send_challenges("antroz2001", n_challenges=1)
     
     
