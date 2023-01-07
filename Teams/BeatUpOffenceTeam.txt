@@ -16,13 +16,13 @@ Jolly Nature
 - Sacred Sword  
 - Smart Strike  
 
-Garchomp @ Yache Berry / Leftovers  
+Garchomp @ Yache Berry
 Ability: Rough Skin  
 EVs: 252 Atk / 4 SpD / 252 Spe  
 Jolly Nature  
 - Swords Dance  
 - Earthquake  
-- Fire Fang / Stone Edge  
+- Fire Fang
 - Scale Shot  
 
 Landorus-Therian (M) @ Rocky Helmet  
