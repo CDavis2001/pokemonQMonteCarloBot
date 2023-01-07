@@ -11,5 +11,18 @@
     "actions" : [
         {"action" : "tackle", "utility" : 1},
         {"action" : "switch_slowbro", "utility" : 0.8}
+    ]},
+    {"observation" : {
+        "active_pokemon" : {
+            "species" : "garchomp",
+            "hp" : 10
+        },
+        "opponent_team" : [
+            {"species" : "pkmn", "ability" : "intim", "item" : "lifeorb", "hp" : 100}
+        ]
+    },
+    "actions" : [
+        {"action" : "tackle", "utility" : 1},
+        {"action" : "switch_slowbro", "utility" : 0.8}
     ]}
 ]}
