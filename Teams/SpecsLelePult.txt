@@ -1,0 +1,59 @@
+Tapu Lele @ Choice Specs  
+Ability: Psychic Surge  
+EVs: 252 SpA / 4 SpD / 252 Spe  
+Timid Nature  
+IVs: 0 Atk  
+- Moonblast  
+- Psychic  
+- Psyshock  
+- Focus Blast  
+
+Dragapult @ Choice Specs  
+Ability: Clear Body  
+EVs: 252 SpA / 4 SpD / 252 Spe  
+Timid Nature  
+IVs: 0 Atk  
+- Draco Meteor  
+- Flamethrower  
+- Shadow Ball  
+- Thunderbolt  
+
+Landorus-Therian (M) @ Rocky Helmet  
+Ability: Intimidate  
+EVs: 244 Atk / 248 SpD / 16 Spe  
+Careful Nature  
+- Earthquake  
+- Knock Off  
+- U-turn  
+- Stealth Rock  
+
+Rotom-Wash @ Heavy-Duty Boots  
+Ability: Levitate  
+EVs: 252 HP / 4 SpD / 252 Spe  
+Bold Nature  
+IVs: 0 Atk  
+- Defog  
+- Volt Switch  
+- Pain Split  
+- Will-O-Wisp  
+
+Ferrothorn @ Leftovers  
+Ability: Iron Barbs  
+EVs: 252 HP / 4 Atk / 252 Def  
+Relaxed Nature  
+IVs: 0 Spe  
+- Spikes  
+- Knock Off  
+- Leech Seed  
+- Gyro Ball  
+
+Heatran @ Air Balloon  
+Ability: Flash Fire  
+EVs: 252 HP / 4 SpA / 252 SpD  
+Calm Nature  
+IVs: 0 Atk  
+- Lava Plume  
+- Earth Power  
+- Protect  
+- Toxic  
+

@@ -1,0 +1,55 @@
+Weavile @ Choice Band  
+Ability: Pressure  
+EVs: 252 Atk / 4 SpD / 252 Spe  
+Adamant Nature  
+- Knock Off  
+- Triple Axel  
+- Ice Shard  
+- Beat Up  
+
+Kartana @ Choice Scarf  
+Ability: Beast Boost  
+EVs: 252 Atk / 4 SpD / 252 Spe  
+Jolly Nature  
+- Leaf Blade  
+- Knock Off  
+- Sacred Sword  
+- Smart Strike  
+
+Garchomp @ Yache Berry / Leftovers  
+Ability: Rough Skin  
+EVs: 252 Atk / 4 SpD / 252 Spe  
+Jolly Nature  
+- Swords Dance  
+- Earthquake  
+- Fire Fang / Stone Edge  
+- Scale Shot  
+
+Landorus-Therian (M) @ Rocky Helmet  
+Ability: Intimidate  
+EVs: 252 HP / 252 Def / 4 SpD  
+Impish Nature  
+IVs: 23 Spe  
+- Stealth Rock / Defog  
+- Earthquake  
+- U-turn  
+- Toxic  
+
+Melmetal @ Assault Vest  
+Ability: Iron Fist  
+EVs: 252 Atk / 244 SpD / 12 Spe  
+Adamant Nature  
+- Double Iron Bash  
+- Earthquake / Superpower  
+- Rock Slide  
+- Thunder Punch  
+
+Dragapult @ Choice Specs  
+Ability: Infiltrator  
+EVs: 4 Def / 252 SpA / 252 Spe  
+Timid Nature  
+- Shadow Ball  
+- Draco Meteor  
+- U-turn  
+- Thunderbolt  
+
