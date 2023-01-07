@@ -6,21 +6,58 @@ import json
 
 class QLearningPlayer(Player):
     def __init(self):
-        self.previous_battle = None
+        # memory
+        self.last_state
+        self.action_index
     
     # self, battle -> move order
     # creates a move order to send to the server
     def choose_move(self, battle):
         # embed battle
+        if self.firstturn:
+           self.firstturn = False 
+        else:
+            new = False
+            # update previous action taken with its actual utility
+            file = open("KB.json")
+            KB = json.load(file)
+            for i in range(len(KB["KB"])):
+                if KB["KB"][i]["observation"] == self.last_state:
+                    KB["KB"][i]["actions"][self.action_index]["utility"] = 1
+                
+            file.close()
         
-        # check if 
         self.previous_battle = battle
         
+        file = open("KB.json")
+        KB = json.load(file)
+        file.close()
         observation = QLearningPlayer.embed_battle(battle)
-        KB = open("tempKB.json", "a")
-        KB.write(json.dumps(observation))
-        KB.write(",\n")
-        KB.close()
+        KB["KB"][0]["observation"]
+        
+        new = True
+        for i in range(len(KB["KB"])):
+            if KB["KB"][i]["observation"] == observation:
+                memory = KB["KB"][i]
+                new = False
+        
+        
+        if new:
+            # populate KB with new observations with actions
+            file = open("KB.json", "w")
+            file.close()
+            # return actions
+        
+        else:
+            # choose action based on current utility
+            max_util = 0
+            choice = None
+            for action in memory["action"]:
+                if action["utility"] > max_util:
+                    max_util = action["utility"]
+                    choice = action["action"]
+                    
+            
         return self.choose_random_move(battle)
     
     # self, battle -> observation
@@ -57,11 +94,17 @@ class QLearningPlayer(Player):
     
     def get_utility(self, battle, move):
         # 
+        KBfile = open("KB.json", "r")
+        
+        
+        KBfile.close()
         return 0
-    
+     
     # self, battlePrevious, battleCurrent -> float
     
     def calc_utility(self, battle_current):
+        current_state = QLearningPlayer.embed_battle(battle_current)
+        self.last_state
         a = calc_utility_of_state(self.previous_battle)
         b = calc_utility_of_state(battle_current)
         return b-a
