@@ -30,7 +30,7 @@ Ability: Intimidate
 EVs: 252 HP / 252 Def / 4 SpD  
 Impish Nature  
 IVs: 23 Spe  
-- Stealth Rock / Defog  
+- Stealth Rock
 - Earthquake  
 - U-turn  
 - Toxic  
@@ -40,7 +40,7 @@ Ability: Iron Fist
 EVs: 252 Atk / 244 SpD / 12 Spe  
 Adamant Nature  
 - Double Iron Bash  
-- Earthquake / Superpower  
+- Earthquake
 - Rock Slide  
 - Thunder Punch  
 
