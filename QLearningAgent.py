@@ -47,7 +47,12 @@ class QLearningPlayer(Player):
         if new:
             # populate KB with new observations with actions
             file = open("KB.json", "w")
-            KB["KB"].append(observation)
+            
+            # wrap embedded battle in observation object
+            JSONobservation = {}
+            JSONobservation['observation'] = observation
+            
+            KB["KB"].append(JSONobservation)
             KB = json.dumps(KB, indent=4)
             file.write(KB)
             file.close()
@@ -74,7 +79,7 @@ class QLearningPlayer(Player):
         active = battle.active_pokemon
         op_team = battle.opponent_team
         
-        observation = "{ 'observation' : { 'active_pokemon' : { 'species' : '"
+        observation = "{ 'active_pokemon' : { 'species' : '"
         observation = observation + active.species + "', 'hp' : "
         observation = observation + str(active.current_hp / active.max_hp) + " }, 'opponent_team' : ["
         for key in op_team:
@@ -91,7 +96,7 @@ class QLearningPlayer(Player):
                 observation = observation + "{ 'species' : '" + pokemon.species + "', 'ability' : '" + ability + "', 'item' : '" + item + "', 'hp' : " + str(pokemon.current_hp / pokemon.max_hp) + "},"
         # remove last comma
         observation = observation.rstrip(observation[-1])
-        observation = observation + "]}}"
+        observation = observation + "]}"
     
         return eval(observation)
     
