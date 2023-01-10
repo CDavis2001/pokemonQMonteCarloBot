@@ -48,7 +48,7 @@ class QLearningPlayer(Player):
             # populate KB with new observations with actions
             file = open("KB.json", "w")
             KB["KB"].append(observation)
-            KB = json.dumps(KB)
+            KB = json.dumps(KB, indent=4)
             file.write(KB)
             file.close()
             # return actions
