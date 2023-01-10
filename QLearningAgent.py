@@ -87,15 +87,30 @@ class QLearningPlayer(Player):
     # self, battle -> observation
     # converts specific battle instance into observation
     def embed_battle(battle):
-        # attributes we want to track
-        # type matchup modifier, effective base powers
+        
+        
         
         active = battle.active_pokemon
-        op_team = battle.opponent_team
         
         observation = "{ 'active_pokemon' : { 'species' : '"
-        observation = observation + active.species + "', 'hp' : "
-        observation = observation + str(active.current_hp / active.max_hp) + " }, 'opponent_team' : ["
+        observation = observation + active.species + "', 'hp' : " + str(active.current_hp / active.max_hp) + " }, 'team' : ["
+        
+        
+        
+        
+        for pokemon in battle.team.values():
+            if pokemon.active:
+                continue
+            else:
+                observation = observation + "{ 'species' : '" + pokemon.species + "', 'hp' : " + str(pokemon.current_hp / pokemon.max_hp) + "},"
+        # remove last comma
+        observation = observation.rstrip(observation[-1])
+        observation = observation + "],"
+        
+        
+        op_team = battle.opponent_team
+        observation = observation + " 'opponent_team' : ["
+        
         for pokemon in op_team.values():
             if pokemon.item == None:
                 item = "unknown"
