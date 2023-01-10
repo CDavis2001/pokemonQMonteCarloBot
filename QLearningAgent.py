@@ -92,8 +92,13 @@ class QLearningPlayer(Player):
         
         active = battle.active_pokemon
         
+        # round hp to nearest 0.1. If rounding sets hp to 0, hp is set to 0.01 instead
+        hp = active.current_hp / active.max_hp
+        rhp = round(hp,1)
+        if rhp == 0 and hp != 0:
+            rhp = 0.01
         observation = "{ 'active_pokemon' : { 'species' : '"
-        observation = observation + active.species + "', 'hp' : " + str(active.current_hp / active.max_hp) + " }, 'team' : ["
+        observation = observation + active.species + "', 'hp' : " + str(rhp) + " }, 'team' : ["
         
         
         
@@ -102,7 +107,11 @@ class QLearningPlayer(Player):
             if pokemon.active:
                 continue
             else:
-                observation = observation + "{ 'species' : '" + pokemon.species + "', 'hp' : " + str(pokemon.current_hp / pokemon.max_hp) + "},"
+                hp = pokemon.current_hp / pokemon.max_hp
+                rhp = round(hp,1)
+                if rhp == 0 and hp != 0:
+                    rhp = 0.01
+                observation = observation + "{ 'species' : '" + pokemon.species + "', 'hp' : " + str(rhp) + "},"
         # remove last comma
         observation = observation.rstrip(observation[-1])
         observation = observation + "],"
@@ -120,7 +129,12 @@ class QLearningPlayer(Player):
                 ability = "unknown"
             else:
                 ability = pokemon.ability
-            observation = observation + "{ 'species' : '" + pokemon.species + "', 'ability' : '" + ability + "', 'item' : '" + item + "', 'hp' : " + str(pokemon.current_hp / pokemon.max_hp) + "},"
+            # round hp to nearest 0.1. If rounding sets hp to 0, hp is set to 0.01 instead
+            hp = pokemon.current_hp / pokemon.max_hp
+            rhp = round(hp,1)
+            if rhp == 0 and hp != 0:
+                rhp = 0.01
+            observation = observation + "{ 'species' : '" + pokemon.species + "', 'ability' : '" + ability + "', 'item' : '" + item + "', 'hp' : " + str(rhp) + "},"
         # remove last comma
         observation = observation.rstrip(observation[-1])
         observation = observation + "]}"
