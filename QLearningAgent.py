@@ -96,17 +96,16 @@ class QLearningPlayer(Player):
         observation = "{ 'active_pokemon' : { 'species' : '"
         observation = observation + active.species + "', 'hp' : "
         observation = observation + str(active.current_hp / active.max_hp) + " }, 'opponent_team' : ["
-        for pokemon in op_team.values:
-            if not pokemon.fainted:
-                if pokemon.item == None:
-                    item = "unknown"
-                else:
-                    item = pokemon.item
-                if pokemon.ability == None:
-                    ability = "unknown"
-                else:
-                    ability = pokemon.ability
-                observation = observation + "{ 'species' : '" + pokemon.species + "', 'ability' : '" + ability + "', 'item' : '" + item + "', 'hp' : " + str(pokemon.current_hp / pokemon.max_hp) + "},"
+        for pokemon in op_team.values():
+            if pokemon.item == None:
+                item = "unknown"
+            else:
+                item = pokemon.item
+            if pokemon.ability == None:
+                ability = "unknown"
+            else:
+                ability = pokemon.ability
+            observation = observation + "{ 'species' : '" + pokemon.species + "', 'ability' : '" + ability + "', 'item' : '" + item + "', 'hp' : " + str(pokemon.current_hp / pokemon.max_hp) + "},"
         # remove last comma
         observation = observation.rstrip(observation[-1])
         observation = observation + "]}"
