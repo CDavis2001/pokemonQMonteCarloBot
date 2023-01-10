@@ -48,11 +48,25 @@ class QLearningPlayer(Player):
             # populate KB with new observations with actions
             file = open("KB.json", "w")
             
-            # wrap embedded battle in observation object
-            JSONobservation = {}
-            JSONobservation['observation'] = observation
+            # create dict of actions
+            actions = {}
             
-            KB["KB"].append(JSONobservation)
+            for i in range(len(battle.available_moves)):
+                actions[i] = {}
+                actions[i]["action"] = battle.available_moves[i].id + ";move"
+                actions[i]["utility"] = 1
+            
+            for i in range(len(battle.available_switches)):
+                actions[i + len(battle.available_moves)] = {}
+                actions[i + len(battle.available_moves)]["action"] = battle.available_switches[i].species + ";switch"
+                actions[i + len(battle.available_moves)]["utility"] = 1
+            
+            # wrap actions and observations into one dict
+            JSONrecord = {}
+            JSONrecord['observation'] = observation
+            JSONrecord['actions'] = actions
+            
+            KB["KB"].append(JSONrecord)
             KB = json.dumps(KB, indent=4)
             file.write(KB)
             file.close()
@@ -62,10 +76,10 @@ class QLearningPlayer(Player):
             # choose action based on current utility
             max_util = 0
             choice = None
-            for action in memory["action"]:
-                if action["utility"] > max_util:
-                    max_util = action["utility"]
-                    choice = action["action"]
+            for i in range(len(memory["actions"])):
+                if memory["actions"][str(i)]["utility"] > max_util:
+                    max_util = memory["actions"][str(i)]["utility"]
+                    choice = memory["actions"][str(i)]["action"]
                     
             
         return self.choose_random_move(battle)
@@ -82,8 +96,7 @@ class QLearningPlayer(Player):
         observation = "{ 'active_pokemon' : { 'species' : '"
         observation = observation + active.species + "', 'hp' : "
         observation = observation + str(active.current_hp / active.max_hp) + " }, 'opponent_team' : ["
-        for key in op_team:
-            pokemon = op_team[key]
+        for pokemon in op_team.values:
             if not pokemon.fainted:
                 if pokemon.item == None:
                     item = "unknown"
