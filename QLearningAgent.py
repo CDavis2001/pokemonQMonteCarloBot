@@ -3,6 +3,7 @@ from poke_env.environment import Battle
 from poke_env.environment import Pokemon
 from utility import *
 import json
+import numpy as np
 
 class QLearningPlayer(Player):
     def __init(self):
