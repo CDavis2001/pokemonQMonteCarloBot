@@ -8,8 +8,7 @@ import numpy as np
 class QLearningPlayer(Player):
     def __init(self):
         # memory
-        self.last_state
-        self.action_index
+        print()
     
     # self, battle -> move order
     # creates a move order to send to the server
@@ -34,10 +33,12 @@ class QLearningPlayer(Player):
         KB = json.load(file)
         file.close()
         observation = QLearningPlayer.embed_battle(battle)
-        KB["KB"][0]["observation"]
+        
         
         new = True
         for i in range(len(KB["KB"])):
+            if len(KB["KB"]) == 0:
+                break
             if KB["KB"][i]["observation"] == observation:
                 memory = KB["KB"][i]
                 new = False
@@ -46,6 +47,9 @@ class QLearningPlayer(Player):
         if new:
             # populate KB with new observations with actions
             file = open("KB.json", "w")
+            KB["KB"].append(observation)
+            KB = json.dumps(KB)
+            file.write(KB)
             file.close()
             # return actions
         
@@ -70,7 +74,7 @@ class QLearningPlayer(Player):
         active = battle.active_pokemon
         op_team = battle.opponent_team
         
-        observation = "{ 'active_pokemon' : { 'species' : '"
+        observation = "{ 'observation' : { 'active_pokemon' : { 'species' : '"
         observation = observation + active.species + "', 'hp' : "
         observation = observation + str(active.current_hp / active.max_hp) + " }, 'opponent_team' : ["
         for key in op_team:
@@ -87,7 +91,7 @@ class QLearningPlayer(Player):
                 observation = observation + "{ 'species' : '" + pokemon.species + "', 'ability' : '" + ability + "', 'item' : '" + item + "', 'hp' : " + str(pokemon.current_hp / pokemon.max_hp) + "},"
         # remove last comma
         observation = observation.rstrip(observation[-1])
-        observation = observation + "]}"
+        observation = observation + "]}}"
     
         return eval(observation)
     
@@ -111,6 +115,12 @@ class QLearningPlayer(Player):
         return b-a
     
     def teampreview(self, battle):
+        # set up object variables
+        self.firstturn = True
+        self.last_state = None
+        self.action_index = 0
+        
+        
         pkmn_matchup = {}
 
         # For each of our pokemon
