@@ -88,7 +88,7 @@ class QLearningPlayer(Player):
             # case for choosing move in new situation - either pick randomly or 
             # use similar situaiton
             options = len(battle.available_moves) + len(battle.available_switches)
-            choice = random.randint(0,options)
+            choice = random.randint(0,options-1)
             self.action_index = choice
             print(actions)
             action = actions[choice]["action"]
