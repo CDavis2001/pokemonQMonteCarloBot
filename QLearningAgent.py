@@ -1,9 +1,11 @@
 from poke_env.player import Player
 from poke_env.environment import Battle
 from poke_env.environment import Pokemon
+from poke_env.environment import Move
 from utility import *
 import json
 import numpy as np
+import random
 
 class QLearningPlayer(Player):
     def __init(self):
@@ -14,25 +16,38 @@ class QLearningPlayer(Player):
     # creates a move order to send to the server
     def choose_move(self, battle):
         # embed battle
+        observation = QLearningPlayer.embed_battle(battle)
+        
         if self.firstturn:
            self.firstturn = False 
         else:
             new = False
             # update previous action taken with its actual utility
+            
+            # calc utility gain from last action
+            utility_gain = self.state_utility(observation) - self.state_utility(self.last_state)
+            
+            
             file = open("KB.json")
             KB = json.load(file)
             for i in range(len(KB["KB"])):
                 if KB["KB"][i]["observation"] == self.last_state:
-                    KB["KB"][i]["actions"][self.action_index]["utility"] = 1
+                    print("looking at previous turn with action index " + str(self.action_index))
+                    KB["KB"][i]["actions"][str(self.action_index)]["utility"] += utility_gain
                 
             file.close()
+            file = open("KB.json", "w")
+            
+            KB = json.dumps(KB, indent=4)
+            file.write(KB)
+            file.close()
         
-        self.previous_battle = battle
         
+        self.last_state = observation
         file = open("KB.json")
         KB = json.load(file)
         file.close()
-        observation = QLearningPlayer.embed_battle(battle)
+        
         
         
         new = True
@@ -70,7 +85,20 @@ class QLearningPlayer(Player):
             KB = json.dumps(KB, indent=4)
             file.write(KB)
             file.close()
-            # return actions
+            # case for choosing move in new situation - either pick randomly or 
+            # use similar situaiton
+            options = len(battle.available_moves) + len(battle.available_switches)
+            choice = random.randint(0,options)
+            self.action_index = choice
+            print(actions)
+            action = actions[choice]["action"]
+            action = action.split(";")
+            if action[1] == "switch":
+                action = Pokemon(species=action[0])
+            else:
+                action = Move(move_id = action[0])
+            return self.create_order(action)
+    
         
         else:
             # choose action based on current utility
@@ -80,9 +108,18 @@ class QLearningPlayer(Player):
                 if memory["actions"][str(i)]["utility"] > max_util:
                     max_util = memory["actions"][str(i)]["utility"]
                     choice = memory["actions"][str(i)]["action"]
+                    print("choosing action index " + str(i))
+                    self.action_index = i
                     
-            
-        return self.choose_random_move(battle)
+            if choice == None:
+                return self.choose_random_move(battle)        
+            else:
+                action = choice.split(";")
+                if action[1] == "switch":
+                    action = Pokemon(species=action[0])
+                else:
+                    action = Move(move_id = action[0])
+                return self.create_order(action)
     
     # self, battle -> observation
     # converts specific battle instance into observation
@@ -156,8 +193,7 @@ class QLearningPlayer(Player):
     def calc_utility(self, battle_current):
         current_state = QLearningPlayer.embed_battle(battle_current)
         self.last_state
-        a = calc_utility_of_state(self.previous_battle)
-        b = calc_utility_of_state(battle_current)
+        
         return b-a
     
     def state_utility(self, state):
