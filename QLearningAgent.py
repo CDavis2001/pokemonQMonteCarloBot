@@ -160,6 +160,18 @@ class QLearningPlayer(Player):
         b = calc_utility_of_state(battle_current)
         return b-a
     
+    def state_utility(self, state):
+        state_value = 0
+        
+        state_value = state_value - (1.0 - state["active_pokemon"]["hp"])
+        for pkmn in state["team"]:
+            state_value = state_value - (1.0 - pkmn["hp"])
+        
+        for pkmn in state["opponent_team"]:
+            state_value = state_value + (1.0 - pkmn["hp"])
+            
+        return state_value
+    
     def teampreview(self, battle):
         # set up object variables
         self.firstturn = True
