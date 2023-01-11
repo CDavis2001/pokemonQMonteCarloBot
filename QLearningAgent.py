@@ -178,23 +178,6 @@ class QLearningPlayer(Player):
     
         return eval(observation)
     
-    # self, battle, move -> float
-    
-    def get_utility(self, battle, move):
-        # 
-        KBfile = open("KB.json", "r")
-        
-        
-        KBfile.close()
-        return 0
-     
-    # self, battlePrevious, battleCurrent -> float
-    
-    def calc_utility(self, battle_current):
-        current_state = QLearningPlayer.embed_battle(battle_current)
-        self.last_state
-        
-        return b-a
     
     def state_utility(self, state):
         state_value = 0
