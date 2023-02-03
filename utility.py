@@ -1,4 +1,4 @@
-from poke_env.environment import Battle, Pokemon, MoveCategory
+from poke_env.environment import Battle, Pokemon, MoveCategory, Status
 import copy
 
 def calcPokeMatchUpModifier(Poke1, Poke2):
@@ -47,6 +47,7 @@ def embed_battle(battle):
     pkmn = dict()
     pkmn["species"] = active.species
     pkmn["hp"] = rhp
+    pkmn["status"] = getStatus(active)
     observation["active_pokemon"] = pkmn
     
         
@@ -64,6 +65,7 @@ def embed_battle(battle):
                 rhp = 0.01
             pkmn["species"] = pokemon.species
             pkmn["hp"] = rhp
+            pkmn["status"] = getStatus(pokemon)
             team.append(copy.deepcopy(pkmn))
             
     observation["team"] = copy.deepcopy(team)
@@ -95,15 +97,37 @@ def embed_battle(battle):
             opponent_active["ability"] = ability
             opponent_active["item"] = item
             opponent_active["hp"] = rhp
+            opponent_active["status"] = getStatus(pokemon)
         else:
             opponent_pkmn = dict()
             opponent_pkmn["species"] = pokemon.species
             opponent_pkmn["ability"] = ability
             opponent_pkmn["item"] = item
             opponent_pkmn["hp"] = rhp
+            opponent_pkmn["status"] = getStatus(pokemon)
             opponent_team.append(copy.deepcopy(opponent_pkmn))
         
     observation["opponent_active"] = copy.deepcopy(opponent_active)
     observation["opponent_team"] = copy.deepcopy(opponent_team)
     
     return copy.deepcopy(observation)
+
+def getStatus(pkmn):
+    status = pkmn.status
+    if status == Status["BRN"]:
+        return "BRN"
+    elif status == Status["FNT"]:
+        return "FNT"
+    elif status == Status["FRZ"]:
+        return "FRZ"
+    elif status == Status["PAR"]:
+        return "PAR"
+    elif status == Status["PSN"]:
+        return "PSN"
+    elif status == Status["SLP"]:
+        return "SLP"
+    elif status == Status["TOX"]:
+        return "TOX"
+    else:
+        return "none"
+    
