@@ -52,4 +52,3 @@ Timid Nature
 - Draco Meteor  
 - U-turn  
 - Thunderbolt  
-
