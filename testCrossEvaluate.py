@@ -1,16 +1,23 @@
 import asyncio
 from MaxDamageAgent import MaxDamagePlayer
+from MaxDamagePlanAgent import MaxDamagePlanPlayer
+from QLearningAgent import QLearningPlayer
+from MonteCarloAgent import MonteCarloPlayer
 from tabulate import tabulate
-from poke_env.player import cross_evaluate
+from poke_env.player import cross_evaluate, RandomPlayer
 from RandomAgent import makeRandomPlayer
 
 async def main():
+    file = open("Teams/SpecsLelePult noswitchmoves.txt")
+    team = file.read()
+    file.close()
     players = []
-    for i in range(0,1):
-        players.append(makeRandomPlayer())
-        maxdam = MaxDamagePlayer(battle_format = "gen8randombattle")
-    players.append(maxdam)
-    challenges = 10
+    players.append(RandomPlayer(battle_format="gen8ou", team=team, start_timer_on_battle_start=True))
+    players.append(MaxDamagePlayer(battle_format="gen8ou", team=team, start_timer_on_battle_start=True))
+    players.append(MaxDamagePlanPlayer(battle_format="gen8ou", team=team, start_timer_on_battle_start=True))
+    players.append(QLearningPlayer(battle_format="gen8ou", team=team, start_timer_on_battle_start=True))
+    players.append(MonteCarloPlayer(battle_format="gen8ou", team=team, start_timer_on_battle_start=True))
+    challenges = 100
     
     
     cross_evaluation = await cross_evaluate(players,challenges)
