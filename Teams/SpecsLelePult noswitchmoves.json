@@ -1,0 +1,75 @@
+{ "team" : [
+    {
+        "species" : "tapulele",
+        "item" : "lifeorb",
+        "ability" : "psychicsurge",
+        "nature" : "timid",
+        "moves" : [
+            "moonblast",
+            "psychic",
+            "psyshock",
+            "focusblast"
+        ]
+    },
+    {
+        "species" : "dragapult",
+        "item" : "lifeobr",
+        "ability" : "clearbody",
+        "nature" : "timid",
+        "moves" : [
+            "dracometeor",
+            "flamethrower",
+            "shadowball",
+            "thunderbolt"
+        ]
+    },
+    {
+        "species" : "landorustherian",
+        "item" : "rockyhelmet",
+        "ability" : "intimidate",
+        "nature" : "careful",
+        "moves" : [
+            "earthquake",
+            "knockoff",
+            "defog",
+            "stealthrock"
+        ]
+    },
+    {
+        "species" : "rotom-wash",
+        "item" : "heavydutyboots",
+        "ability" : "levitate",
+        "nature" : "bold",
+        "moves" : [
+            "defog",
+            "thunderbolt",
+            "painsplit",
+            "willowisp"
+        ]
+    },
+    {
+        "species" : "ferrothorn",
+        "item" : "leftovers",
+        "ability" : "ironbarbs",
+        "nature" : "relaxed",
+        "moves" : [
+            "spikes",
+            "knockoff",
+            "leechseed",
+            "gyroball"
+        ]
+    },
+    {
+        "species" : "heatran",
+        "item" : "airballoon",
+        "ability" : "flashfire",
+        "nature" : "calm",
+        "moves" : [
+            "lavaplume",
+            "earthpower",
+            "protect",
+            "toxic"
+        ]
+    }
+]
+}

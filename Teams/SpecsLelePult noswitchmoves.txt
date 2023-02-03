@@ -1,4 +1,4 @@
-Tapu Lele @ Choice Specs  
+Tapu Lele @ Life Orb  
 Ability: Psychic Surge  
 EVs: 252 SpA / 4 SpD / 252 Spe  
 Timid Nature  
@@ -8,7 +8,7 @@ IVs: 0 Atk
 - Psyshock  
 - Focus Blast  
 
-Dragapult @ Choice Specs  
+Dragapult @ Life Orb  
 Ability: Clear Body  
 EVs: 252 SpA / 4 SpD / 252 Spe  
 Timid Nature  
@@ -24,7 +24,7 @@ EVs: 244 Atk / 248 SpD / 16 Spe
 Careful Nature  
 - Earthquake  
 - Knock Off  
-- U-turn  
+- Defog  
 - Stealth Rock  
 
 Rotom-Wash @ Heavy-Duty Boots  
