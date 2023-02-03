@@ -1,4 +1,5 @@
 from poke_env.environment import Battle, Pokemon, MoveCategory
+import copy
 
 def calcPokeMatchUpModifier(Poke1, Poke2):
     # modifier for Poke1 stab attacks on Poke 2
@@ -34,35 +35,44 @@ def calcDamage(user, move, target):
     
 # self, battle -> observation
 # converts specific battle instance into observation
-def embed_battle(battle):       
+def embed_battle(battle):
+    observation = dict()      
     active = battle.active_pokemon
     # round hp to nearest 0.1. If rounding sets hp to 0, hp is set to 0.01 instead
     hp = active.current_hp / active.max_hp
     rhp = round(hp,1)
     if rhp == 0 and hp != 0:
         rhp = 0.01
-    observation = "{ 'active_pokemon' : { 'species' : '"
-    observation = observation + active.species + "', 'hp' : " + str(rhp) + " }, 'team' : ["
+    
+    pkmn = dict()
+    pkmn["species"] = active.species
+    pkmn["hp"] = rhp
+    observation["active_pokemon"] = pkmn
+    
         
         
-        
+    team = []    
         
     for pokemon in battle.team.values():
         if pokemon.active:
             continue
         else:
+            pkmn = dict()
             hp = pokemon.current_hp / pokemon.max_hp
             rhp = round(hp,1)
             if rhp == 0 and hp != 0:
                 rhp = 0.01
-            observation = observation + "{ 'species' : '" + pokemon.species + "', 'hp' : " + str(rhp) + "},"
-    # remove last comma
-    observation = observation.rstrip(observation[-1])
-    observation = observation + "],"
+            pkmn["species"] = pokemon.species
+            pkmn["hp"] = rhp
+            team.append(copy.deepcopy(pkmn))
+            
+    observation["team"] = copy.deepcopy(team)
+    
         
         
     op_team = battle.opponent_team
-    observation = observation + " 'opponent_team' : ["
+    opponent_active = dict()
+    opponent_team = []
         
     for pokemon in op_team.values():
         if pokemon.item == None:
@@ -73,18 +83,27 @@ def embed_battle(battle):
             ability = "unknown"
         else:
             ability = pokemon.ability
-        if pokemon.active:
-            active = "active"
-        else:
-            active = "not active"
+        
         # round hp to nearest 0.1. If rounding sets hp to 0, hp is set to 0.01 instead
         hp = pokemon.current_hp / pokemon.max_hp
         rhp = round(hp,1)
         if rhp == 0 and hp != 0:
             rhp = 0.01
-        observation = observation + "{ 'species' : '" + pokemon.species + "', 'active' : '" + active + "', 'ability' : '" + ability + "', 'item' : '" + item + "', 'hp' : " + str(rhp) + "},"
-    # remove last comma
-    observation = observation.rstrip(observation[-1])
-    observation = observation + "]}"
+            
+        if pokemon.active:
+            opponent_active["species"] = pokemon.species
+            opponent_active["ability"] = ability
+            opponent_active["item"] = item
+            opponent_active["hp"] = rhp
+        else:
+            opponent_pkmn = dict()
+            opponent_pkmn["species"] = pokemon.species
+            opponent_pkmn["ability"] = ability
+            opponent_pkmn["item"] = item
+            opponent_pkmn["hp"] = rhp
+            opponent_team.append(copy.deepcopy(opponent_pkmn))
+        
+    observation["opponent_active"] = copy.deepcopy(opponent_active)
+    observation["opponent_team"] = copy.deepcopy(opponent_team)
     
-    return eval(observation)
+    return copy.deepcopy(observation)

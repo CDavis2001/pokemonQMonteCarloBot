@@ -28,7 +28,6 @@ class QLearningPlayer(Player):
             KB = json.load(file)
             for i in range(len(KB["KB"])):
                 if KB["KB"][i]["observation"] == self.last_state:
-                    print("looking at previous turn with action index " + str(self.action_index))
                     KB["KB"][i]["actions"][str(self.action_index)]["utility"] += utility_gain
                 
             file.close()
@@ -86,7 +85,6 @@ class QLearningPlayer(Player):
             options = len(battle.available_moves) + len(battle.available_switches)
             choice = random.randint(0,options-1)
             self.action_index = choice
-            print(actions)
             action = actions[choice]["action"]
             action = action.split(";")
             if action[1] == "switch":
@@ -104,7 +102,6 @@ class QLearningPlayer(Player):
                 if memory["actions"][str(i)]["utility"] > max_util:
                     max_util = memory["actions"][str(i)]["utility"]
                     choice = memory["actions"][str(i)]["action"]
-                    print("choosing action index " + str(i))
                     self.action_index = i
                     
             if choice == None:
@@ -131,7 +128,7 @@ class QLearningPlayer(Player):
         
         for pkmn in state["opponent_team"]:
             state_value = state_value + (1.0 - pkmn["hp"])
-            
+        state_value = state_value + (1.0 - state["opponent_active"]["hp"])    
         return state_value
     
     def teampreview(self, battle):

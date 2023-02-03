@@ -23,7 +23,6 @@ class MonteCarloPlayer(Player):
                     return self.create_order(Pokemon(species=action[1][1]))
             # otherwise clear the plan
             else:
-                print("replanning")
                 self.plan = []
                 
         self.tree = []
@@ -77,11 +76,9 @@ class MonteCarloPlayer(Player):
         
         
         if len(self.plan) == 0:
-            print("made plan, empty")
             return(self.choose_random_move(battle))
         action = self.plan[0]
         self.plan.pop(0)
-        print(len(action))
         if action[1][0] == "use":
             return self.create_order(action[1][1])
         else:

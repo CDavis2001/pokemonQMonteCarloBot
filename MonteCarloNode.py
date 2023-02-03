@@ -44,7 +44,9 @@ class Node:
         for pkmn in self.state["opponent_team"]:
             if pkmn["hp"] != 0:
                 return 0
-        return 1
+        if self.state["opponent_active"]["hp"] == 0:
+            return 1
+        return 0
     
     def back_propagate(self, index):
         self.results[index] +=1
@@ -53,16 +55,12 @@ class Node:
             
     def simulate(self, action):
         opp_actions = []
+        
         active_pkmn = self.state["active_pokemon"]["species"]
-        
-        
-        
         active_pkmn = Pokemon(species=active_pkmn)
-        for i in range(len(self.state["opponent_team"])):
-            pkmn = self.state["opponent_team"][i]
-            if pkmn["active"] == "active":
-                opp_pkmn = Pokemon(species=pkmn["species"])
-                opp_index = i
+        
+        opp_pkmn = Pokemon(species=self.state["opponent_active"]["species"])
+        
         
         file = open("common_pkmn.json", "r")
         data = json.load(file)
@@ -75,7 +73,7 @@ class Node:
                             opp_actions.append(["use",move])
 
         for pkmn in self.state["opponent_team"]:
-            if pkmn["hp"] != 0 and pkmn["species"] != opp_pkmn.species:
+            if pkmn["hp"] != 0:
                 opp_actions.append(["switch", pkmn])
         
         
@@ -101,10 +99,12 @@ class Node:
             
             if opp_action[0] == "switch":
                 for i in range(len(child_state["opponent_team"])):
-                    if child_state["opponent_team"][i]["active"] == "active":
-                        child_state["opponent_team"][i]["active"] == "not active"
-                    if child_state["opponent_team"][i]["species"] == opp_action[1]:
-                        child_state["opponent_team"][i]["active"] == "active"
+                    if child_state["opponent_team"][i]["species"] == action[1]:
+                        into = copy.deepcopy(child_state["opponent_team"][i])
+                        outof = copy.deepcopy(child_state["opponent_active"])
+                        child_state["opponent_team"][i] = copy.deepcopy(outof)
+                        child_state["opponent_active"] = copy.deepcopy(into)
+                        
                         
             if action[0] == "use":
                 if action[1].category == MoveCategory["STATUS"]:
@@ -114,13 +114,13 @@ class Node:
                     damage = calcDamage(active_pkmn, action[1], opp_pkmn)
                     maxhp = opp_pkmn.base_stats['hp'] * 2 + 31 + 63 + 100 + 10
                     percentage_damage = (damage / maxhp)
-                    child_state["opponent_team"][opp_index]["hp"] -= percentage_damage
-                    if child_state["opponent_team"][opp_index]["hp"] < 0:
-                        child_state["opponent_team"][opp_index]["hp"] = 0
+                    child_state["opponent_active"]["hp"] -= percentage_damage
+                    if child_state["opponent_active"]["hp"] < 0:
+                        child_state["opponent_active"]["hp"] = 0
                     else:
-                        child_state["opponent_team"][opp_index]["hp"] = round(child_state["opponent_team"][opp_index]["hp"], 1)
-                        if child_state["opponent_team"][opp_index]["hp"] == 0:
-                            child_state["opponent_team"][opp_index]["hp"] = 0.01
+                        child_state["opponent_active"]["hp"] = round(child_state["opponent_active"]["hp"], 1)
+                        if child_state["opponent_active"]["hp"] == 0:
+                            child_state["opponent_active"]["hp"] = 0.01
                     
                     
             if opp_action[0] == "use":
