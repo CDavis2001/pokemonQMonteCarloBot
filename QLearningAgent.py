@@ -13,7 +13,6 @@ class QLearningPlayer(Player):
     def choose_move(self, battle):
         # embed battle
         observation = embed_battle(battle)
-        
         if self.firstturn:
            self.firstturn = False 
         else:
@@ -21,7 +20,7 @@ class QLearningPlayer(Player):
             # update previous action taken with its actual utility
             
             # calc utility gain from last action
-            utility_gain = self.state_utility(observation) - self.state_utility(self.last_state)
+            utility_gain = state_utility(observation) - state_utility(self.last_state)
             
             
             file = open("KB.json")
@@ -114,22 +113,6 @@ class QLearningPlayer(Player):
                     action = Move(move_id = action[0])
                 return self.create_order(action)
     
-    
-    
-    
-    def state_utility(self, state):
-        state_value = 0
-        
-        state_value = state_value - (1.0 - state["active_pokemon"]["hp"])
-        index = 0
-        for pkmn in state["team"]:
-            index+=1
-            state_value = state_value - (1.0 - pkmn["hp"])
-        
-        for pkmn in state["opponent_team"]:
-            state_value = state_value + (1.0 - pkmn["hp"])
-        state_value = state_value + (1.0 - state["opponent_active"]["hp"])    
-        return state_value
     
     def teampreview(self, battle):
         # set up object variables
