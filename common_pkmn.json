@@ -1,0 +1,128 @@
+{"pokemon" : [
+    {
+        "name" : "landorustherian",
+        "moves" : [
+            "earthquake",
+            "uturn",
+            "stealthrock",
+            "knockoff"
+        ]
+    },
+    {
+        "name" : "ferrothorn",
+        "moves" : [
+            "leechseed",
+            "knockoff",
+            "stealthrock",
+            "gyroball"
+        ]
+    },
+    {
+        "name" : "dragapult",
+        "moves" : [
+            "shadowball",
+            "dracometeor",
+            "uturn",
+            "flamethrower"
+        ]
+    },
+    {
+        "name" : "garchomp",
+        "moves" : [
+            "earthquake",
+            "swordsdance",
+            "scaleshot",
+            "stealthrock"
+        ]
+    },
+    {
+        "name" : "kartana",
+        "moves" : [
+            "leafblade",
+            "sacredsword",
+            "knockoff",
+            "smartstrike"
+        ]
+    },
+    {
+        "name" : "toxapex",
+        "moves" : [
+            "recover",
+            "scald",
+            "haze",
+            "toxic"
+        ]
+    },
+    {
+        "name" : "heatran",
+        "moves" : [
+            "earthpower",
+            "magmastorm",
+            "taunt",
+            "stealthrock"
+        ]
+    },
+    {
+        "name" : "urshifurapidstrike",
+        "moves" : [
+            "surgingstrikes",
+            "closecombat",
+            "uturn",
+            "aquajet"
+        ]
+    },
+    {
+        "name" : "melmetal",
+        "moves" : [
+            "doubleironbash",
+            "thunderpunch",
+            "icepunch",
+            "earthquake"
+        ]
+    },
+    {
+        "name" : "zapdos",
+        "moves" : [
+            "roost",
+            "hurricane",
+            "voltswitch",
+            "heatwave"
+        ]
+    },
+    {
+        "name" : "corviknight",
+        "moves" : [
+            "roost",
+            "defog",
+            "bodypress",
+            "uturn"
+        ]
+    },
+    {
+        "name" : "rillaboom",
+        "moves" : [
+            "grassyglide",
+            "knockoff",
+            "swordsdance",
+            "uturn"
+        ]
+    },
+    {
+        "name" : "clefable",
+        "moves" : [
+            "moonblast",
+            "soft-boiled",
+            "calmmind",
+            "stealthrock"
+        ]
+    },
+    {
+        "name" : "weavile",
+        "moves" : [
+            "knockoff",
+            "iceshard",
+            "tripleaxel",
+            "swordsdance"
+        ]
+    }
+]}
