@@ -36,10 +36,10 @@ def calcDamage(user, move, target):
 # self, battle -> observation
 # converts specific battle instance into observation
 def embed_battle(battle):
+    observation = dict()
     
+    # Handle Active Pokemon ---------------------------------------------
     
-    
-    observation = dict()      
     active = battle.active_pokemon
     # round hp to nearest 0.1. If rounding sets hp to 0, hp is set to 0.01 instead
     hp = active.current_hp / active.max_hp
@@ -51,9 +51,10 @@ def embed_battle(battle):
     pkmn["species"] = active.species
     pkmn["hp"] = rhp
     pkmn["status"] = getStatus(active)
+    pkmn["boosts"] = active.boosts
     observation["active_pokemon"] = pkmn
     
-        
+    # Handle Team Pokemon -------------------------------------------------------
         
     team = []    
         
@@ -73,7 +74,7 @@ def embed_battle(battle):
             
     observation["team"] = copy.deepcopy(team)
     
-        
+    # Handle Opponent Pokemon ----------------------------------------------------   
         
     op_team = battle.opponent_team
     opponent_active = dict()
@@ -101,6 +102,7 @@ def embed_battle(battle):
             opponent_active["item"] = item
             opponent_active["hp"] = rhp
             opponent_active["status"] = getStatus(pokemon)
+            opponent_active["boosts"] = pokemon.boosts
         else:
             opponent_pkmn = dict()
             opponent_pkmn["species"] = pokemon.species
@@ -136,20 +138,16 @@ def embed_battle(battle):
     opside = battle.opponent_side_conditions
     
     field = dict()
-    rocks = False
-    spikes = False
-    for key in opside:
-        if key == SideCondition["STEALTH_ROCK"]:
-            field["stealthrock"] = 1
-            rocks = True
-        elif key == SideCondition["SPIKES"]:
-            spikes = True
-            field["spikes"] = side[key]
+    field["stealthrock"] = 0
+    field["spikes"] = 0
+    if len(side) != 0:
+        for key in opside:
+            if key == SideCondition["STEALTH_ROCK"]:
+                field["stealthrock"] = 1
+            elif key == SideCondition["SPIKES"]:
+                field["spikes"] = opside[key]
             
-    if not rocks:
-        field["stealthrock"] = 0
-    if not spikes:
-        field["spikes"] = 0
+    
     observation["opfield"] = copy.deepcopy(field)
     
     return copy.deepcopy(observation)
@@ -183,12 +181,16 @@ def state_utility(state):
         opteam = state["opponent_team"]
         field = state["field"]
         opfield = state["opfield"]
+        stats = ["accuracy", "atk", "def", "spa", "spd", "spe"]
+        
         
         # active pokemon hp, status, boosts
         state_value -= (1.0 - active["hp"])
         if active["status"] != "none":
             state_value -= 0.2
-        
+        for stat in stats:
+            state_value += 0.05 * active["boosts"][stat]
+            
         
         # team pokemon hp, status
         for pkmn in team:
@@ -200,12 +202,15 @@ def state_utility(state):
         state_value += (1.0 - opactive["hp"])
         if opactive["status"] != "none":
             state_value += 0.2
+        for stat in stats:
+            state_value -= 0.1 * opactive["boosts"][stat]
         
         # opponent team pokemon hp, status
         for pkmn in opteam:
             state_value += (1.0 - pkmn["hp"])
             if pkmn["status"] != "none":
                 state_value += 0.2
+        state_value -= (5 - len(opteam))
         
         # field condtions
         if field["stealthrock"] == 1:
