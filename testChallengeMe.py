@@ -4,14 +4,16 @@ from tabulate import tabulate
 from poke_env.player import cross_evaluate
 from RandomAgent import makeRandomPlayer
 from QLearningAgent import QLearningPlayer
+from MonteCarloAgent import MonteCarloPlayer
 
 from poke_env import PlayerConfiguration, ShowdownServerConfiguration
 
 async def main():
-    file = open("Teams/BeatUpOffenceTeam.txt")
+    file = open("Teams/SpecsLelePult noswitchmoves.txt")
     team = file.read()
     file.close()
-    player = MaxDamagePlanPlayer(battle_format="gen8ou",team=team)
+    #player = QLearningPlayer(battle_format="gen8ou",team=team)
+    player = MonteCarloPlayer(battle_format="gen8ou",team=team)
     await player.send_challenges("antroz2001", n_challenges=1)
     
     
