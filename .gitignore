@@ -3,3 +3,9 @@ __pycache__/RandomAgent.cpython-38.pyc
 __pycache__/QLearningAgent.cpython-38.pyc
 __pycache__/MaxDamagePlanAgent.cpython-38.pyc
 __pycache__/MaxDamageAgent.cpython-38.pyc
+JSONtest.py
+KB.json
+package-lock.json
+test.py
+__pycache__/MonteCarloAgent.cpython-38.pyc
+__pycache__/MonteCarloNode.cpython-38.pyc
