@@ -11,8 +11,23 @@ class QLearningPlayer(Player):
     # self, battle -> move order
     # creates a move order to send to the server
     def choose_move(self, battle):
-        # embed battle
+        
+        # ------------------------------------------------------------------
+        # Explore Exploit, exploration = 20%
+        gamma = 20
+        x = random.randint(1,100)
+        
+        if x <= gamma:
+            explore = True
+        else:
+            explore = False
+        
+        # ------------------------------------------------------------------
+        # Observe Current State
         observation = embed_battle(battle)
+        
+        # -------------------------------------------------------------------
+        # Update last action taken with actual outcome utility
         if self.firstturn:
            self.firstturn = False 
         else:
@@ -35,9 +50,37 @@ class QLearningPlayer(Player):
             KB = json.dumps(KB, indent=4)
             file.write(KB)
             file.close()
-        
-        
+            
         self.last_state = observation
+        # ---------------------------------------------------------------------
+        # Exploring, choose random action
+        # create dict of actions
+        actions = {}
+        for i in range(len(battle.available_switches)):
+            actions[i + len(battle.available_moves)] = {}
+            actions[i + len(battle.available_moves)]["action"] = battle.available_switches[i].species + ";switch"
+            actions[i + len(battle.available_moves)]["utility"] = 1    
+        for i in range(len(battle.available_moves)):
+            actions[i] = {}
+            actions[i]["action"] = battle.available_moves[i].id + ";move"
+            actions[i]["utility"] = 1
+        
+        
+        if explore:
+            options = len(battle.available_moves) + len(battle.available_switches)
+            choice = random.randint(0,options-1)
+            self.action_index = choice
+            action = actions[choice]["action"]
+            action = action.split(";")
+            if action[1] == "switch":
+                action = Pokemon(species=action[0])
+            else:
+                action = Move(move_id = action[0])
+            return self.create_order(action)
+        
+        # -------------------------------------------------------------------
+        # Exploiting
+        
         file = open("KB.json")
         KB = json.load(file)
         file.close()
@@ -52,23 +95,15 @@ class QLearningPlayer(Player):
                 memory = KB["KB"][i]
                 new = False
         
-        
+        # --------------------------------
+        # Dealing with new state
         if new:
             # populate KB with new observations with actions
             file = open("KB.json", "w")
             
-            # create dict of actions
-            actions = {}
             
-            for i in range(len(battle.available_moves)):
-                actions[i] = {}
-                actions[i]["action"] = battle.available_moves[i].id + ";move"
-                actions[i]["utility"] = 1
             
-            for i in range(len(battle.available_switches)):
-                actions[i + len(battle.available_moves)] = {}
-                actions[i + len(battle.available_moves)]["action"] = battle.available_switches[i].species + ";switch"
-                actions[i + len(battle.available_moves)]["utility"] = 1
+            
             
             # wrap actions and observations into one dict
             JSONrecord = {}
@@ -81,6 +116,8 @@ class QLearningPlayer(Player):
             file.close()
             # case for choosing move in new situation - either pick randomly or 
             # use similar situaiton
+            
+            
             options = len(battle.available_moves) + len(battle.available_switches)
             choice = random.randint(0,options-1)
             self.action_index = choice
@@ -90,8 +127,12 @@ class QLearningPlayer(Player):
                 action = Pokemon(species=action[0])
             else:
                 action = Move(move_id = action[0])
+            self.pickSimSituation(observation)
             return self.create_order(action)
-    
+            
+                
+        # -----------------------------
+        # Dealing with familiar state
         
         else:
             # choose action based on current utility
@@ -106,12 +147,23 @@ class QLearningPlayer(Player):
             if choice == None:
                 return self.choose_random_move(battle)        
             else:
+                valid = False
                 action = choice.split(";")
                 if action[1] == "switch":
                     action = Pokemon(species=action[0])
+                    for switch in battle.available_switches:
+                        if switch.species == action.species:
+                            valid = True
                 else:
                     action = Move(move_id = action[0])
-                return self.create_order(action)
+                    for move in battle._available_moves:
+                        if move.id == action.id:
+                            valid = True
+                if valid:
+                    return self.create_order(action)
+                else:
+                    print("default move")
+                    return self.choose_default_move()
     
     
     def teampreview(self, battle):
@@ -151,3 +203,7 @@ class QLearningPlayer(Player):
         
         # return difference 
         return pkmn2vs1 - pkmn1vs2
+
+
+    def pickSimSituation(self, state):
+        return ""
