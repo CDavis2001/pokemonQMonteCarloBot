@@ -8,15 +8,11 @@ import numpy as np
 import random
 
 class QLearningPlayer(Player):
-    def __init(self):
-        # memory
-        print()
-    
     # self, battle -> move order
     # creates a move order to send to the server
     def choose_move(self, battle):
         # embed battle
-        observation = QLearningPlayer.embed_battle(battle)
+        observation = embed_battle(battle)
         
         if self.firstturn:
            self.firstturn = False 
@@ -121,69 +117,16 @@ class QLearningPlayer(Player):
                     action = Move(move_id = action[0])
                 return self.create_order(action)
     
-    # self, battle -> observation
-    # converts specific battle instance into observation
-    def embed_battle(battle):
-        
-        
-        
-        active = battle.active_pokemon
-        
-        # round hp to nearest 0.1. If rounding sets hp to 0, hp is set to 0.01 instead
-        hp = active.current_hp / active.max_hp
-        rhp = round(hp,1)
-        if rhp == 0 and hp != 0:
-            rhp = 0.01
-        observation = "{ 'active_pokemon' : { 'species' : '"
-        observation = observation + active.species + "', 'hp' : " + str(rhp) + " }, 'team' : ["
-        
-        
-        
-        
-        for pokemon in battle.team.values():
-            if pokemon.active:
-                continue
-            else:
-                hp = pokemon.current_hp / pokemon.max_hp
-                rhp = round(hp,1)
-                if rhp == 0 and hp != 0:
-                    rhp = 0.01
-                observation = observation + "{ 'species' : '" + pokemon.species + "', 'hp' : " + str(rhp) + "},"
-        # remove last comma
-        observation = observation.rstrip(observation[-1])
-        observation = observation + "],"
-        
-        
-        op_team = battle.opponent_team
-        observation = observation + " 'opponent_team' : ["
-        
-        for pokemon in op_team.values():
-            if pokemon.item == None:
-                item = "unknown"
-            else:
-                item = pokemon.item
-            if pokemon.ability == None:
-                ability = "unknown"
-            else:
-                ability = pokemon.ability
-            # round hp to nearest 0.1. If rounding sets hp to 0, hp is set to 0.01 instead
-            hp = pokemon.current_hp / pokemon.max_hp
-            rhp = round(hp,1)
-            if rhp == 0 and hp != 0:
-                rhp = 0.01
-            observation = observation + "{ 'species' : '" + pokemon.species + "', 'ability' : '" + ability + "', 'item' : '" + item + "', 'hp' : " + str(rhp) + "},"
-        # remove last comma
-        observation = observation.rstrip(observation[-1])
-        observation = observation + "]}"
     
-        return eval(observation)
     
     
     def state_utility(self, state):
         state_value = 0
         
         state_value = state_value - (1.0 - state["active_pokemon"]["hp"])
+        index = 0
         for pkmn in state["team"]:
+            index+=1
             state_value = state_value - (1.0 - pkmn["hp"])
         
         for pkmn in state["opponent_team"]:
