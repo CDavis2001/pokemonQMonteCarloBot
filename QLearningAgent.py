@@ -147,23 +147,19 @@ class QLearningPlayer(Player):
             if choice == None:
                 return self.choose_random_move(battle)        
             else:
-                valid = False
                 action = choice.split(";")
                 if action[1] == "switch":
                     action = Pokemon(species=action[0])
                     for switch in battle.available_switches:
                         if switch.species == action.species:
-                            valid = True
+                            return self.create_order(action)
                 else:
                     action = Move(move_id = action[0])
                     for move in battle._available_moves:
                         if move.id == action.id:
-                            valid = True
-                if valid:
-                    return self.create_order(action)
-                else:
-                    print("default move")
-                    return self.choose_default_move()
+                            return self.create_order(action)
+                
+                return self.choose_default_move()
     
     
     def teampreview(self, battle):
