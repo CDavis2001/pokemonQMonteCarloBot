@@ -109,7 +109,8 @@ class Node:
             if action[0] == "use":
                 if action[1].category == MoveCategory["STATUS"]:
                     # handle status moves
-                    child_state = child_state
+                    child_state = copy.deepcopy(self.handleStatus(child_state, action[1], False))
+                    
                 else:
                     damage = calcDamage(active_pkmn, action[1], opp_pkmn)
                     maxhp = opp_pkmn.base_stats['hp'] * 2 + 31 + 63 + 100 + 10
@@ -127,7 +128,7 @@ class Node:
                 moveobj = Move(opp_action[1])
                 if moveobj.category == MoveCategory["STATUS"]:
                     # handle status moves
-                    child_state = child_state
+                    child_state = copy.deepcopy(self.handleStatus(child_state, moveobj, True))
                 else:
                     damage = calcDamage(opp_pkmn, moveobj, active_pkmn)
                     maxhp = active_pkmn.base_stats['hp'] * 2 + 31 + 63 + 100 + 10
@@ -158,6 +159,34 @@ class Node:
         
         return nodes
 
+    def handleStatus(self, state, move, op):
+        boosts = move.self_boost
+        if not boosts == None:
+            if op:
+                for key in boosts:
+                    state["opponent_active"]["boosts"][key] += boosts[key]
+            else:
+                for key in boosts:
+                    state["active_pokemon"]["boosts"][key] += boosts[key]
+        
+        if move.id == "stealthrock":
+            if op:
+                state["field"]["stealthrock"] = 1
+            else:
+                state["opfield"]["stealthrock"] = 1
+        elif move.id == "spikes":
+            if op:
+                if state["field"]["spikes"] < 3:
+                    state["field"]["spikes"] += 1
+            else:
+                if state["opfield"]["spikes"] < 3:
+                    state["opfield"]["spikes"] += 1
+        if move.id == "defog":
+            state["field"]["stealthrock"] = 0
+            state["opfield"]["stealthrock"] = 0
+            state["field"]["spikes"] = 0
+            state["opfield"]["spikes"] = 0
+        return copy.deepcopy(state)
         
         
   
