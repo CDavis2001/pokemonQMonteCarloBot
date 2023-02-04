@@ -8,7 +8,6 @@ class MonteCarloPlayer(Player):
         self.plan = []
         
         state = embed_battle(battle)
-        
         # check if plan exists
         if len(self.plan) > 0:
             # get first action in plan
@@ -18,9 +17,15 @@ class MonteCarloPlayer(Player):
             # follow the plan
             if action[0] == state:
                 if action[1][0] == "use":
-                    return self.create_order(action[1][1])
+                    for move in battle._available_moves:
+                        if move.id == action[1][1].id:
+                            return self.create_order(action[1][1])
                 else:
-                    return self.create_order(Pokemon(species=action[1][1]))
+                    pkmn = Pokemon(species=action[1][1])
+                    for switch in battle.available_switches:
+                        if switch.species == pkmn.species:
+                            return self.create_order(pkmn)
+                return self.choose_default_move()
             # otherwise clear the plan
             else:
                 self.plan = []
@@ -30,7 +35,7 @@ class MonteCarloPlayer(Player):
         root = Node(None,state,None)
         queue = [root]
         endstates = 0
-        while len(queue) > 0 and endstates < 10:
+        while len(queue) > 0 and endstates < 100:
             node = queue.pop(0)
             self.tree.append(node)
             for action in node.untried_actions:
@@ -77,25 +82,21 @@ class MonteCarloPlayer(Player):
         
         if len(self.plan) == 0:
             return(self.choose_random_move(battle))
+        
+        
         action = self.plan[0]
         self.plan.pop(0)
         if action[1][0] == "use":
-            return self.create_order(action[1][1])
+            for move in battle._available_moves:
+                if move.id == action[1][1].id:
+                    return self.create_order(action[1][1])
+            
         else:
-            return self.create_order(Pokemon(species=action[1][1]))
+            pkmn = Pokemon(species=action[1][1])
+            for switch in battle.available_switches:
+                if switch.species == pkmn.species:
+                    return self.create_order(pkmn)
         
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    # node, action -> node
-    def simulate():
-        return
-    
+        return self.choose_default_move()
+
     
