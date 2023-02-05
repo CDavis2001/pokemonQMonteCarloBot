@@ -9,3 +9,4 @@ package-lock.json
 test.py
 __pycache__/MonteCarloAgent.cpython-38.pyc
 __pycache__/MonteCarloNode.cpython-38.pyc
+KBLite.json
