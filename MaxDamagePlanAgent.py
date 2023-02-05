@@ -2,11 +2,16 @@ from poke_env.player import Player
 from poke_env.environment import Battle
 from poke_env.environment import Pokemon
 import numpy as np
-
+from utility import embed_battle as full_embed
+from utility import state_utility
 class MaxDamagePlanPlayer(Player):  
     
     def choose_move(self, battle):
-        
+        # ------------------------------------------------------------------
+        # Data Collection
+        file = open("final_states/MaxDamPlan.txt", "w")
+        file.write(str(state_utility(full_embed(battle))))
+        file.close()
         # Have a 10% chance to act completely randomly to simulate
         # a learning agent exploring
         
@@ -15,7 +20,6 @@ class MaxDamagePlanPlayer(Player):
         
         
         if Active.damage_multiplier(OpActive.type_1) > 1.0:
-            print ("bad matchup")
             # switch
             possible_switches = battle.available_switches
             modifier = 4
