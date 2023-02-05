@@ -7,6 +7,9 @@ from tabulate import tabulate
 from poke_env.player import cross_evaluate, RandomPlayer
 from QLearningAgentLite import QLearningLitePlayer
 from test1v1 import onev1_evaluate
+from HybridHPSwitch import HybridHPSwitchPlayer
+from HybridInfoSwitch import HybridInfoSwitchPlayer
+from HybridTurnSwitch import HybridTurnSwitchPlayer
 
 async def main():
     file = open("Teams/SpecsLelePult noswitchmoves.txt")
@@ -19,6 +22,9 @@ async def main():
     #players.append(QLearningPlayer(battle_format="gen8ou", team=team, start_timer_on_battle_start=True))
     #players.append(MonteCarloPlayer(battle_format="gen8ou", team=team, start_timer_on_battle_start=True))
     players.append(QLearningLitePlayer(battle_format="gen8ou", team=team, start_timer_on_battle_start=True))
+    #players.append(HybridTurnSwitchPlayer(battle_format="gen8ou", team=team, start_timer_on_battle_start=True))
+    #players.append(HybridHPSwitchPlayer(battle_format="gen8ou", team=team, start_timer_on_battle_start=True))
+    #players.append(HybridInfoSwitchPlayer(battle_format="gen8ou", team=team, start_timer_on_battle_start=True))
     
     for i in range(10):
         
@@ -30,6 +36,9 @@ async def main():
         states.append(open("final_states/MaxDamPlan.txt"))
         states.append(open("final_states/QLite.txt"))
         #states.append(open("final_states/MonteCarlo.txt"))
+        #states.append(open("final_states/HybridHP.txt"))
+        #states.append(open("final_states/HybridTurn.txt"))
+        #states.append(open("final_states/HybridInfo.txt"))
         
         utility = []
         for state in states:
