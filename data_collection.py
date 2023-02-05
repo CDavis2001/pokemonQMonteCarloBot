@@ -25,20 +25,25 @@ async def main():
         #cross_evaluation = await cross_evaluate(players,challenges)
         cross_evaluation = await onev1_evaluate(players, 1)
         file = open("results.txt", "a")
-    
-        state1 = open("final_states/MaxDamPlan.txt")
-        state2 = open("final_states/QLite.txt")
-        utility1 = float(state1.read())
-        utility2 = float(state2.read())
-        state1.close()
-        state2.close()
+        
+        states = []    
+        states.append(open("final_states/MaxDamPlan.txt"))
+        states.append(open("final_states/QLite.txt"))
+        #states.append(open("final_states/MonteCarlo.txt"))
+        
+        utility = []
+        for state in states:
+            utility.append(float(state.read()))
+            state.close()
+        
+        
         
     
         for key in cross_evaluation:
             if cross_evaluation[key][0] == 0:
-                file.write("LOSS;" + key + ";" + str(max(utility1,utility2)) + "\n")
+                file.write("LOSS;" + key + ";" + str(max(utility)) + "\n")
             else:
-                file.write("WIN;" + key + ";" + str(max(utility1,utility2)) + "\n")
+                file.write("WIN;" + key + ";" + str(max(utility)) + "\n")
         file.close()
 
 
