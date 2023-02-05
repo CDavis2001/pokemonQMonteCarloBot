@@ -1,7 +1,4 @@
 from poke_env.player import Player
-from poke_env.environment import Battle
-from poke_env.environment import Pokemon
-from poke_env.environment import Move
 from utility import *
 from utility import teampreview as tp
 from MonteCarloAgent import MonteCarloPlayer
@@ -15,7 +12,7 @@ class HybridHPSwitchPlayer(Player):
     def choose_move(self, battle):
         # --------------------------------------------
         # Data Collection
-        file = open("final_states/MonteCarlo.txt", "w")
+        file = open("final_states/HybridHP.txt", "w")
         file.write(str(state_utility(embed_battle(battle))))
         file.close()
         # -------------------------------------------

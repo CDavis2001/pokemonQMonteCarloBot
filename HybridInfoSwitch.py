@@ -1,13 +1,29 @@
 from poke_env.player import Player
-from poke_env.environment import Battle
-from poke_env.environment import Pokemon
-from poke_env.environment import Move
 from utility import *
-import json
-import numpy as np
-import random
-
-class HybridInfoSwitchPlayer(Player):
+from utility import teampreview as tp
+from MonteCarloAgent import MonteCarloPlayer
+from HybridMethods import qchoose_move
+class HybridTurnSwitchPlayer(Player):
     # self, battle -> move order
     # creates a move order to send to the server
     def choose_move(self, battle):
+        # --------------------------------------------
+        # Data Collection
+        file = open("final_states/HybridInfo.txt", "w")
+        file.write(str(state_utility(embed_battle(battle))))
+        file.close()
+        # -------------------------------------------
+        # method picking
+        if not self.switch:
+            if len(battle.opponent_team) == 6:
+                self.switch
+                self.Player = MonteCarloPlayer()
+            
+        if not self.switch:
+            return qchoose_move(battle)
+        else:
+            return self.Player.choose_move(battle=battle)
+    
+    def teampreview(self, battle):
+        self.switch = False
+        return tp(battle)
