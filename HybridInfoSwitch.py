@@ -3,7 +3,7 @@ from utility import *
 from utility import teampreview as tp
 from MonteCarloAgent import MonteCarloPlayer
 from HybridMethods import qchoose_move
-class HybridTurnSwitchPlayer(Player):
+class HybridInfoSwitchPlayer(Player):
     # self, battle -> move order
     # creates a move order to send to the server
     def choose_move(self, battle):
