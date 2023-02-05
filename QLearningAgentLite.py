@@ -1,5 +1,7 @@
 from poke_env.player import Player
 from poke_env.environment import Battle, Pokemon, Move, SideCondition
+from utility import embed_battle as full_embed
+from utility import state_utility as full_utility
 import copy
 
 import json
@@ -10,7 +12,7 @@ class QLearningLitePlayer(Player):
     # self, battle -> move order
     # creates a move order to send to the server
     def choose_move(self, battle):
-          # ------------------------------------------------------------------
+        # ------------------------------------------------------------------
         # Explore Exploit, exploration = 20%
         gamma = 20
         x = random.randint(1,100)
@@ -23,7 +25,11 @@ class QLearningLitePlayer(Player):
         # ------------------------------------------------------------------
         # Observe Current State
         observation = QLearningLitePlayer.embed_battle(battle)
-        
+        # ------------------------------------------------------------------
+        # Data Collection
+        file = open("final_states/QLite.txt", "w")
+        file.write(str(full_utility(full_embed(battle))))
+        file.close()
         # -------------------------------------------------------------------
         # Update last action taken with actual outcome utility
         if self.firstturn:
@@ -31,55 +37,71 @@ class QLearningLitePlayer(Player):
         else:
             new = False
             # update previous action taken with its actual utility
+            try:
+                # calc utility gain from last action - our reward
+                utility_gain = self.state_utility(observation) - self.state_utility(self.last_state)
             
-            # calc utility gain from last action - our reward
-            utility_gain = self.state_utility(observation) - self.state_utility(self.last_state)
+
+                file = open("KBLite.json")
+                KB = json.load(file)
+                prev_state = None
+                new_state = None
+                for i in range(len(KB["KB"])):
+                    if KB["KB"][i]["observation"] == self.last_state:
+                        prev_state = KB["KB"][i]
+                    if KB["KB"][i]["observation"] == observation:
+                        new_state = KB["KB"][i]
             
-            
-            file = open("KBLite.json")
-            KB = json.load(file)
-            prev_state = None
-            new_state = None
-            for i in range(len(KB["KB"])):
-                if KB["KB"][i]["observation"] == self.last_state:
-                    prev_state = KB["KB"][i]
-                if KB["KB"][i]["observation"] == observation:
-                    new_state = KB["KB"][i]
-            
-            if prev_state == None:
-                pass
-            else:
-                # case where new state is unseen, just increment by the reward
-                if new_state == None:
-                    prev_state["actions"][str(self.action_index)]["utility"] += utility_gain
+                if prev_state == None:
+                    pass
                 else:
-                    actions = new_state["actions"]
-                    max_util = -999
-                    for action in actions:
-                        if actions[action]["utility"] > max_util:
-                            max_util = actions[action]["utility"]
-                    prev_state["actions"][str(self.action_index)]["utility"] += utility_gain + 0.8 * (max_util - prev_state["actions"][str(self.action_index)]["utility"])
+                    stateid = str(i) + "," + str(self.action_index)
+                    # case where new state is unseen, just increment by the reward
+                    if new_state == None:
+                        oldreward = str(prev_state["actions"][str(self.action_index)]["utility"])
+                        prev_state["actions"][str(self.action_index)]["utility"] += utility_gain
+                        newreward = str(prev_state["actions"][str(self.action_index)]["utility"])
+                    else:
+                        actions = new_state["actions"]
+                        max_util = -999
+                        for action in actions:
+                            if actions[action]["utility"] > max_util:
+                                max_util = actions[action]["utility"]
+                        oldreward = str(prev_state["actions"][str(self.action_index)]["utility"])
+                        prev_state["actions"][str(self.action_index)]["utility"] += utility_gain + 0.8 * (max_util - prev_state["actions"][str(self.action_index)]["utility"])
+                        newreward = str(prev_state["actions"][str(self.action_index)]["utility"])
             
-            file.close()
-            file = open("KBLite.json", "w")
+                    # ---------------------------------------------
+                    # Data Collection
+                    file = open("qvaluetracking/QLite.txt", "a")
+                    file.write(stateid + ";" + oldreward + ";" + newreward + "\n")
+                    file.close()
+                    # ------------------------------------------------
+                    
+                    
+                file.close()
+                file = open("KBLite.json", "w")
             
-            KB = json.dumps(KB, indent=4)
-            file.write(KB)
-            file.close()
-            
+                KB = json.dumps(KB, indent=4)
+                file.write(KB)
+                file.close()
+                
+            except:
+                pass    
         self.last_state = observation
         # ---------------------------------------------------------------------
         # Exploring, choose random action
         # create dict of actions
         actions = {}
-        for i in range(len(battle.available_switches)):
-            actions[i + len(battle.available_moves)] = {}
-            actions[i + len(battle.available_moves)]["action"] = battle.available_switches[i].species + ";switch"
-            actions[i + len(battle.available_moves)]["utility"] = 0 
         for i in range(len(battle.available_moves)):
             actions[i] = {}
             actions[i]["action"] = battle.available_moves[i].id + ";move"
             actions[i]["utility"] = 0
+        for i in range(len(battle.available_switches)):
+            actions[i + len(battle.available_moves)] = {}
+            actions[i + len(battle.available_moves)]["action"] = battle.available_switches[i].species + ";switch"
+            actions[i + len(battle.available_moves)]["utility"] = 0 
+        
         
         
         if explore:
@@ -183,7 +205,7 @@ class QLearningLitePlayer(Player):
         self.firstturn = True
         self.last_state = None
         self.action_index = 0
-        
+        self.final_state = None
         
         pkmn_matchup = {}
 
