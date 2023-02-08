@@ -17,17 +17,17 @@ async def main():
     #players.append(MaxDamagePlayer(battle_format="gen8ou", team=team, start_timer_on_battle_start=True))
     players.append(MaxDamagePlanPlayer(battle_format="gen8ou", team=team, start_timer_on_battle_start=True))
     #players.append(QLearningPlayer(battle_format="gen8ou", team=team, start_timer_on_battle_start=True))
-    #players.append(MonteCarloPlayer(battle_format="gen8ou", team=team, start_timer_on_battle_start=True))
-    players.append(QLearningLitePlayer(battle_format="gen8ou", team=team, start_timer_on_battle_start=True))
+    players.append(MonteCarloPlayer(battle_format="gen8ou", team=team, start_timer_on_battle_start=True))
+    #players.append(QLearningLitePlayer(battle_format="gen8ou", team=team, start_timer_on_battle_start=True))
     
-    for i in range(10):
+    for i in range(500):
         
         #cross_evaluation = await cross_evaluate(players,challenges)
         cross_evaluation = await onev1_evaluate(players, 1)
         file = open("results.txt", "a")
     
         state1 = open("final_states/MaxDamPlan.txt")
-        state2 = open("final_states/QLite.txt")
+        state2 = open("final_states/.txt")
         utility1 = float(state1.read())
         utility2 = float(state2.read())
         state1.close()
