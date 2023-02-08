@@ -10,6 +10,10 @@ test.py
 __pycache__/MonteCarloAgent.cpython-38.pyc
 __pycache__/MonteCarloNode.cpython-38.pyc
 KBLite.json
+__pycache__/QLearningAgentLite.cpython-38.pyc
+__pycache__/test1v1.cpython-38.pyc
+__pycache__/HybridHPSwitch.cpython-38.pyc
+__pycache__/HybridMethods.cpython-38.pyc
 .vscode/settings.json
 __pycache__/QLearningAgentLite.cpython-38.pyc
 __pycache__/test1v1.cpython-38.pyc

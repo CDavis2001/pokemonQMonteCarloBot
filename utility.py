@@ -1,18 +1,6 @@
 from poke_env.environment import Battle, Pokemon, MoveCategory, Status, SideCondition
 import copy
-
-def calcPokeMatchUpModifier(Poke1, Poke2):
-    # modifier for Poke1 stab attacks on Poke 2
-    modifier = 1
-    modifier = modifier * Poke2.damage_multiplier(Poke1.type_1)
-    if Poke1.type_2:
-        modifier = modifier * Poke2.damage_multiplier(Poke1.type_2)
-        
-    # modifier for Poke2 stab attacks on Poke 1
-    modifier = modifier * Poke1.damage_multiplier(Poke2.type_1)
-    if Poke2.type_2:
-        modifier = modifier * Poke1.damage_multiplier(Poke2.type_2)
-
+import numpy as np
 
 def calcDamage(user, move, target):
     userStats = user.base_stats
@@ -32,6 +20,18 @@ def calcDamage(user, move, target):
     damage = damage * target.damage_multiplier(move.type)
     
     return damage
+
+def calcPokeMatchUpModifier(Poke1, Poke2):
+    # modifier for Poke1 stab attacks on Poke 2
+    modifier = 1
+    modifier = modifier * Poke2.damage_multiplier(Poke1.type_1)
+    if Poke1.type_2:
+        modifier = modifier * Poke2.damage_multiplier(Poke1.type_2)
+        
+    # modifier for Poke2 stab attacks on Poke 1
+    modifier = modifier * Poke1.damage_multiplier(Poke2.type_1)
+    if Poke2.type_2:
+        modifier = modifier * Poke1.damage_multiplier(Poke2.type_2)
     
 # self, battle -> observation
 # converts specific battle instance into observation
@@ -224,3 +224,36 @@ def state_utility(state):
             state_value += (opfield["spikes"] * 0.1)
         
         return state_value
+    
+    
+def teampreview(battle):
+        pkmn_matchup = {}
+
+        # For each of our pokemon
+        for i, pkmn in enumerate(battle.team.values()):
+            # We store their average performance against the opponent team
+            pkmn_matchup[i] = np.mean([
+                teampreview_performance(pkmn, opp)
+                for opp in battle.opponent_team.values()
+            ])
+
+        # We sort our pokemon by performance
+        ordered_mons = sorted(pkmn_matchup, key = lambda k: -pkmn_matchup[k])
+
+        # We start with the one we consider best overall
+        # We use i + 1 as python indexes start from 0
+        #  but showdown's indexes start from 1
+        return "/team " + ''.join([str(i + 1) for i in ordered_mons])
+    
+def teampreview_performance(pkmn1, pkmn2):
+    # calc offensive matchup multiplier for each pokemon against the other
+    pkmn1vs2 = pkmn1.damage_multiplier(pkmn2.type_1)
+    if pkmn2.type_2:
+        pkmn1vs2 = max(pkmn1vs2, pkmn1.damage_multiplier(pkmn2.type_2))
+        
+    pkmn2vs1 = pkmn2.damage_multiplier(pkmn1.type_1)
+    if pkmn1.type_2:
+        pkmn2vs1 = max(pkmn2vs1, pkmn2.damage_multiplier(pkmn1.type_2))
+        
+    # return difference 
+    return pkmn2vs1 - pkmn1vs2

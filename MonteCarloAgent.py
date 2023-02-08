@@ -1,10 +1,23 @@
 from poke_env.player import Player
 from MonteCarloNode import Node
 from poke_env.environment import Pokemon
-from utility import embed_battle
+from utility import embed_battle, state_utility
+from utility import teampreview as tp
 
 class MonteCarloPlayer(Player):
+    # --------------------------------------------
+    def dataCollect(self, battle):
+        
+        # Data Collection
+        file = open("final_states/MonteCarlo.txt", "w")
+        file.write(str(state_utility(embed_battle(battle))))
+        file.close()
+    # ---------------------------------------------
     def choose_move(self, battle):
+        self.dataCollect(battle)
+        return self.select_move(battle)
+    # ------------------------------------------------    
+    def select_move(self, battle):
         self.plan = []
         
         state = embed_battle(battle)
@@ -98,5 +111,9 @@ class MonteCarloPlayer(Player):
                     return self.create_order(pkmn)
         
         return self.choose_default_move()
+    
+    
+    def teampreview(self, battle):
+        return tp(battle)
 
     
