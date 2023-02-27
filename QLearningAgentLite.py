@@ -201,6 +201,7 @@ class QLearningLitePlayer(Player):
     
     
     def teampreview(self, battle):
+        self.firstturn = True
         return tp(battle)
 
 
