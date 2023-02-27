@@ -15,21 +15,21 @@ async def main():
     players = []
     #players.append(RandomPlayer(battle_format="gen8ou", team=team, start_timer_on_battle_start=True))
     #players.append(MaxDamagePlayer(battle_format="gen8ou", team=team, start_timer_on_battle_start=True))
-    players.append(MaxDamagePlanPlayer(battle_format="gen8ou", team=team, start_timer_on_battle_start=True))
+    #players.append(MaxDamagePlanPlayer(battle_format="gen8ou", team=team, start_timer_on_battle_start=True))
     #players.append(QLearningPlayer(battle_format="gen8ou", team=team, start_timer_on_battle_start=True))
-    players.append(MonteCarloPlayer(battle_format="gen8ou", team=team, start_timer_on_battle_start=True))
-    #players.append(QLearningLitePlayer(battle_format="gen8ou", team=team, start_timer_on_battle_start=True))
+    players.append(MonteCarloPlayer(battle_format="gen8ou", team=team, start_timer_on_battle_start=True, max_concurrent_battles=1))
+    players.append(QLearningLitePlayer(battle_format="gen8ou", team=team, start_timer_on_battle_start=True, max_concurrent_battles=1))
     
-    for i in range(500):
+    for i in range(1000):
         
         #cross_evaluation = await cross_evaluate(players,challenges)
         cross_evaluation = await onev1_evaluate(players, 1)
         file = open("results.txt", "a")
         
         states = []    
-        states.append(open("final_states/MaxDamPlan.txt"))
+        #states.append(open("final_states/MaxDamPlan.txt"))
+        states.append(open("final_states/MonteCarlo.txt"))
         states.append(open("final_states/QLite.txt"))
-        #states.append(open("final_states/MonteCarlo.txt"))
         
         utility = []
         for state in states:
