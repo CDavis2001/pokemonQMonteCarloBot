@@ -14,3 +14,8 @@ __pycache__/QLearningAgentLite.cpython-38.pyc
 __pycache__/test1v1.cpython-38.pyc
 __pycache__/HybridHPSwitch.cpython-38.pyc
 __pycache__/HybridMethods.cpython-38.pyc
+.vscode/settings.json
+__pycache__/QLearningAgentLite.cpython-38.pyc
+__pycache__/test1v1.cpython-38.pyc
+final_states/MaxDamPlan.txt
+final_states/QLite.txt
