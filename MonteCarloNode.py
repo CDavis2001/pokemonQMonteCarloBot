@@ -22,6 +22,7 @@ class Node:
         for i in range(6):
             if data["team"][i]["species"] == state["active_pokemon"]["species"]:
                 for j in range(4):
+                    
                     move = Move(data["team"][i]["moves"][j])
                     self.untried_actions.append(["use", move])
             
@@ -29,7 +30,7 @@ class Node:
             if pkmn["hp"] > 0:
                 self.untried_actions.append(["switch", pkmn["species"]])
                     
-    
+        
     
     def is_end_state(self):
         if self.state["active_pokemon"]["hp"] == 0:
