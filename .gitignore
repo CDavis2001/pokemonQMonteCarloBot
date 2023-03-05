@@ -19,3 +19,10 @@ __pycache__/QLearningAgentLite.cpython-38.pyc
 __pycache__/test1v1.cpython-38.pyc
 final_states/MaxDamPlan.txt
 final_states/QLite.txt
+__pycache__/HybridInfoSwitch.cpython-38.pyc
+__pycache__/HybridTurnSwitch.cpython-38.pyc
+final_states/HybridHP.txt
+final_states/HybridInfo.txt
+qvaluetracking/QLite.txt
+final_states/MonteCarlo.txt
+final_states/HybridTurn.txt
