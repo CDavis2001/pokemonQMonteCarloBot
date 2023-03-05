@@ -1,0 +1,148 @@
+{
+    "results" : {
+        "MaxDamagePlanPla 1" : {
+            "win_util" : [],
+            "loss_util" : [],
+            "QLearningLitePla 1" : {
+                "wins" : 0,
+                "losses" : 0
+            },
+            "MonteCarloPlayer 1" : {
+                "wins" : 0,
+                "losses" : 0
+            },
+            "HybridTurnSwitch 1" : {
+                "wins" : 0,
+                "losses" : 0
+            },
+            "HybridHPSwitchPl 1" : {
+                "wins" : 0,
+                "losses" : 0
+            },
+            "HybridInfoSwitch 1" : {
+                "wins" : 0,
+                "losses" : 0
+            }
+        },
+        "QLearningLitePla 1" : {
+            "win_util" : [],
+            "loss_util" : [],
+            "MaxDamagePlanPla 1" : {
+                "wins" : 0,
+                "losses" : 0
+            },
+            "MonteCarloPlayer 1" : {
+                "wins" : 0,
+                "losses" : 0
+            },
+            "HybridTurnSwitch 1" : {
+                "wins" : 0,
+                "losses" : 0
+            },
+            "HybridHPSwitchPl 1" : {
+                "wins" : 0,
+                "losses" : 0
+            },
+            "HybridInfoSwitch 1" : {
+                "wins" : 0,
+                "losses" : 0
+            }
+        },
+        "MonteCarloPlayer 1" : {
+            "win_util" : [],
+            "loss_util" : [],
+            "QLearningLitePla 1" : {
+                "wins" : 0,
+                "losses" : 0
+            },
+            "MaxDamagePlanPla 1" : {
+                "wins" : 0,
+                "losses" : 0
+            },
+            "HybridTurnSwitch 1" : {
+                "wins" : 0,
+                "losses" : 0
+            },
+            "HybridHPSwitchPl 1" : {
+                "wins" : 0,
+                "losses" : 0
+            },
+            "HybridInfoSwitch 1" : {
+                "wins" : 0,
+                "losses" : 0
+            }
+        },
+        "HybridTurnSwitch 1" : {
+            "win_util" : [],
+            "loss_util" : [],
+            "QLearningLitePla 1" : {
+                "wins" : 0,
+                "losses" : 0
+            },
+            "MonteCarloPlayer 1" : {
+                "wins" : 0,
+                "losses" : 0
+            },
+            "MaxDamagePlanPla 1" : {
+                "wins" : 0,
+                "losses" : 0
+            },
+            "HybridHPSwitchPl 1" : {
+                "wins" : 0,
+                "losses" : 0
+            },
+            "HybridInfoSwitch 1" : {
+                "wins" : 0,
+                "losses" : 0
+            }
+        },
+        "HybridHPSwitchPl 1" : {
+            "win_util" : [],
+            "loss_util" : [],
+            "QLearningLitePla 1" : {
+                "wins" : 0,
+                "losses" : 0
+            },
+            "MonteCarloPlayer 1" : {
+                "wins" : 0,
+                "losses" : 0
+            },
+            "HybridTurnSwitch 1" : {
+                "wins" : 0,
+                "losses" : 0
+            },
+            "MaxDamagePlanPla 1" : {
+                "wins" : 0,
+                "losses" : 0
+            },
+            "HybridInfoSwitch 1" : {
+                "wins" : 0,
+                "losses" : 0
+            }
+        },
+        "HybridInfoSwitch 1" : {
+            "win_util" : [],
+            "loss_util" : [],
+            "QLearningLitePla 1" : {
+                "wins" : 0,
+                "losses" : 0
+            },
+            "MonteCarloPlayer 1" : {
+                "wins" : 0,
+                "losses" : 0
+            },
+            "HybridTurnSwitch 1" : {
+                "wins" : 0,
+                "losses" : 0
+            },
+            "HybridHPSwitchPl 1" : {
+                "wins" : 0,
+                "losses" : 0
+            },
+            "MaxDamagePlanPla 1" : {
+                "wins" : 0,
+                "losses" : 0
+            }
+        }
+    }
+}
