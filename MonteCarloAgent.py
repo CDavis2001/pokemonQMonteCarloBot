@@ -20,7 +20,13 @@ class MonteCarloPlayer(Player):
         return self.select_move(battle)
     # ------------------------------------------------    
     def select_move(self, battle):
-        
+        try:
+            len(self.plan)
+        except Exception:
+            self.plan = []
+
+
+
         
         state = embed_battle(battle)
         # check if plan exists
