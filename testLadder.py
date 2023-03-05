@@ -26,7 +26,7 @@ async def main():
         battle_format="gen8ou", team=team, start_timer_on_battle_start=True
     )
     # Playing 5 games on the ladder
-    await player.ladder(5)
+    await player.ladder(100)
 
     # Print the rating of the player and its opponent after each battle
     for battle in player.battles.values():
