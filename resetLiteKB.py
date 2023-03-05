@@ -1,3 +1,3 @@
-file = open("KBLite.json", "w")
+file = open("KBLiteDemo.json", "w")
 file.write('''{ "KB" : []}''')
 file.close()
