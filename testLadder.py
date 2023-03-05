@@ -4,6 +4,7 @@ from HybridHPSwitch import HybridHPSwitchPlayer
 from HybridInfoSwitch import HybridInfoSwitchPlayer
 from HybridTurnSwitch import HybridTurnSwitchPlayer
 from MonteCarloAgent import MonteCarloPlayer
+from MaxDamagePlanAgent import MaxDamagePlanPlayer
 import asyncio
 
 async def main():
@@ -12,12 +13,18 @@ async def main():
     team = file.read()
     file.close()
     
+    """
     player = MonteCarloPlayer(
         player_configuration=PlayerConfiguration("qmonte", "Neptunium237"),
         server_configuration=ShowdownServerConfiguration,
         battle_format="gen8ou", team=team, start_timer_on_battle_start=True
     )
-    
+    """
+    player = MaxDamagePlanPlayer(
+        player_configuration=PlayerConfiguration("qmonte1", "Neptunium237"),
+        server_configuration=ShowdownServerConfiguration,
+        battle_format="gen8ou", team=team, start_timer_on_battle_start=True
+    )
     # Playing 5 games on the ladder
     await player.ladder(5)
 
