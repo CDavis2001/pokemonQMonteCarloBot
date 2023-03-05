@@ -79,7 +79,7 @@ def qchoose_move(battle):
         
     else:
         # choose action based on current utility
-        max_util = 0
+        max_util = -50000
         choice = None
         for i in range(len(memory["actions"])):
             if memory["actions"][str(i)]["utility"] > max_util:
@@ -87,7 +87,7 @@ def qchoose_move(battle):
                 choice = memory["actions"][str(i)]["action"]
                     
         if choice == None:
-            return Player.choose_random_move(battle)        
+            return Player.choose_random_move(battle)
         else:
             action = choice.split(";")
             if action[1] == "switch":
