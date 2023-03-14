@@ -1,10 +1,10 @@
 from poke_env import PlayerConfiguration, ShowdownServerConfiguration
-from QLearningAgentLite import QLearningLitePlayer
-from HybridHPSwitch import HybridHPSwitchPlayer
-from HybridInfoSwitch import HybridInfoSwitchPlayer
-from HybridTurnSwitch import HybridTurnSwitchPlayer
-from MonteCarloAgent import MonteCarloPlayer
-from MaxDamagePlanAgent import MaxDamagePlanPlayer
+from agents.QLearningAgentLite import QLearningLitePlayer
+from agents.HybridHPSwitch import HybridHPSwitchPlayer
+from agents.HybridInfoSwitch import HybridInfoSwitchPlayer
+from agents.HybridTurnSwitch import HybridTurnSwitchPlayer
+from agents.MonteCarloAgent import MonteCarloPlayer
+from agents.MaxDamagePlanAgent import MaxDamagePlanPlayer
 import asyncio
 
 async def main():
