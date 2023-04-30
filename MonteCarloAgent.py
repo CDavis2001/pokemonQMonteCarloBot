@@ -1,5 +1,5 @@
 from poke_env.player import Player
-from agents.MonteCarloNode import Node
+from MonteCarloNode import Node
 from poke_env.environment import Pokemon
 from utility import embed_battle, state_utility
 from utility import teampreview as tp

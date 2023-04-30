@@ -1,11 +1,11 @@
 import asyncio
-from agents.MaxDamageAgent import MaxDamagePlayer
-from agents.MaxDamagePlanAgent import MaxDamagePlanPlayer
-from agents.QLearningAgent import QLearningPlayer
-from agents.MonteCarloAgent import MonteCarloPlayer
+from MaxDamageAgent import MaxDamagePlayer
+from MaxDamagePlanAgent import MaxDamagePlanPlayer
+from QLearningAgent import QLearningPlayer
+from MonteCarloAgent import MonteCarloPlayer
 from tabulate import tabulate
 from poke_env.player import cross_evaluate, RandomPlayer
-from agents.RandomAgent import makeRandomPlayer
+from RandomAgent import makeRandomPlayer
 
 async def main():
     file = open("Teams/SpecsLelePult noswitchmoves.txt")

@@ -1,8 +1,8 @@
 from poke_env.player import Player
-from agents.MonteCarloNode import Node
+from MonteCarloNode import Node
 from poke_env.environment import Pokemon, Move
 import random
-from agents.QLearningAgentLite import QLearningLitePlayer
+from QLearningAgentLite import QLearningLitePlayer
 import json
 
 def qchoose_move(battle):

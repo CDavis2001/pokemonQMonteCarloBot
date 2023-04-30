@@ -1,5 +1,5 @@
 import asyncio
-from agents.QLearningAgentLiteDemo import QLearningLiteDemoPlayer
+from QLearningAgentLiteDemo import QLearningLiteDemoPlayer
 
 
 from poke_env import PlayerConfiguration, ShowdownServerConfiguration

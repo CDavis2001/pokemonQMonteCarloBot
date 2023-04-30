@@ -1,15 +1,15 @@
 import asyncio
-from agents.MaxDamageAgent import MaxDamagePlayer
-from agents.MaxDamagePlanAgent import MaxDamagePlanPlayer
-from agents.QLearningAgent import QLearningPlayer
-from agents.MonteCarloAgent import MonteCarloPlayer
+from MaxDamageAgent import MaxDamagePlayer
+from MaxDamagePlanAgent import MaxDamagePlanPlayer
+from QLearningAgent import QLearningPlayer
+from MonteCarloAgent import MonteCarloPlayer
 from tabulate import tabulate
 from poke_env.player import cross_evaluate, RandomPlayer
-from agents.QLearningAgentLite import QLearningLitePlayer
-from agents.HybridHPSwitch import HybridHPSwitchPlayer
-from agents.HybridInfoSwitch import HybridInfoSwitchPlayer
-from agents.HybridTurnSwitch import HybridTurnSwitchPlayer
-from runBattles.test1v1 import onev1_evaluate
+from QLearningAgentLite import QLearningLitePlayer
+from HybridHPSwitch import HybridHPSwitchPlayer
+from HybridInfoSwitch import HybridInfoSwitchPlayer
+from HybridTurnSwitch import HybridTurnSwitchPlayer
+from test1v1 import onev1_evaluate
 
 async def getResults(players, files):
     

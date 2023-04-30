@@ -1,8 +1,8 @@
 from poke_env.player import Player
 from utility import *
 from utility import teampreview as tp
-from agents.MonteCarloAgent import MonteCarloPlayer
-from agents.HybridMethods import qchoose_move
+from MonteCarloAgent import MonteCarloPlayer
+from HybridMethods import qchoose_move
 class HybridInfoSwitchPlayer(Player):
     # self, battle -> move order
     # creates a move order to send to the server
