@@ -13,8 +13,7 @@ class MaxDamagePlanPlayer(Player):
         file = open("final_states/MaxDamPlan.txt", "w")
         file.write(str(state_utility(full_embed(battle))))
         file.close()
-        # Have a 10% chance to act completely randomly to simulate
-        # a learning agent exploring
+        # ----------------------------------------------------------------
         
         Active = battle.active_pokemon
         OpActive = battle.opponent_active_pokemon

@@ -13,44 +13,48 @@ async def main():
     team = file.read()
     file.close()
     
+    # uncomment single agent to battle on ladder and comment out other agents
+    # each agent needs to have its username and password replaced and the account registered on pokemon showdown before use
+    
     """
     player = MonteCarloPlayer(
-        player_configuration=PlayerConfiguration("qmonte", "Neptunium237"),
+        player_configuration=PlayerConfiguration("username", "password"),
         server_configuration=ShowdownServerConfiguration,
         battle_format="gen8ou", team=team, start_timer_on_battle_start=True
     )
     
     player = MaxDamagePlanPlayer(
-        player_configuration=PlayerConfiguration("qmonte1", "Neptunium237"),
+        player_configuration=PlayerConfiguration("username", "password"),
         server_configuration=ShowdownServerConfiguration,
         battle_format="gen8ou", team=team, start_timer_on_battle_start=True
     )
     
     player = QLearningLitePlayer(
-        player_configuration=PlayerConfiguration("qmonte2", "ProjectTest2"),
+        player_configuration=PlayerConfiguration("username", "password"),
         server_configuration=ShowdownServerConfiguration,
         battle_format="gen8ou", team=team, start_timer_on_battle_start=True
     )
     
     player = HybridHPSwitchPlayer(
-        player_configuration=PlayerConfiguration("qmonte3", "ProjectTest3"),
+        player_configuration=PlayerConfiguration("username", "password"),
         server_configuration=ShowdownServerConfiguration,
         battle_format="gen8ou", team=team, start_timer_on_battle_start=True
     )
     
     player = HybridTurnSwitchPlayer(
-        player_configuration=PlayerConfiguration("qmonte4", "ProjectTest4"),
+        player_configuration=PlayerConfiguration("username", "password"),
         server_configuration=ShowdownServerConfiguration,
         battle_format="gen8ou", team=team, start_timer_on_battle_start=True
     )
     """
     player = HybridInfoSwitchPlayer(
-        player_configuration=PlayerConfiguration("qmonte5", "ProjectTest5"),
+        player_configuration=PlayerConfiguration("username", "password"),
         server_configuration=ShowdownServerConfiguration,
         battle_format="gen8ou", team=team, start_timer_on_battle_start=True
     )
 
-    # Playing 5 games on the ladder
+    # Playing games on the ladder
+    # change 100 to desired number of battles the agent should do
     await player.ladder(100)
 
     # Print the rating of the player and its opponent after each battle

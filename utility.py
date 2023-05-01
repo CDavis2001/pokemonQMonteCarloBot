@@ -2,15 +2,21 @@ from poke_env.environment import Battle, Pokemon, MoveCategory, Status, SideCond
 import copy
 import numpy as np
 
+# fuunction to calculate damage of a move
 def calcDamage(user, move, target):
+    # get base states of user and target
     userStats = user.base_stats
     targetStats = target.base_stats
+    # first step of formula
     damage = (((2 * 100) / 5) + 2) * move.base_power
+    # apply relevant stats
     if move.category == MoveCategory["PHYSICAL"]:
         damage = damage * ((2 * userStats["atk"] + 31 + 63 + 5) / (2 * targetStats["def"] + 31+63+5))
     else:
-        damage = damage * ((2 * userStats["spa"] + 31 + 63 + 5) / (2 * targetStats["spd"] + 31 + 63 + 5))                
+        damage = damage * ((2 * userStats["spa"] + 31 + 63 + 5) / (2 * targetStats["spd"] + 31 + 63 + 5))
+    # third step of formula
     damage = (damage / 50) + 2
+    # apply same type attack bonus if relevant
     if move.type == user.type_1:
         damage = damage * 1.5
     elif user.type_2:
@@ -21,6 +27,7 @@ def calcDamage(user, move, target):
     
     return damage
 
+# calculate the nmodfier of two pokemon
 def calcPokeMatchUpModifier(Poke1, Poke2):
     # modifier for Poke1 stab attacks on Poke 2
     modifier = 1
@@ -115,7 +122,7 @@ def embed_battle(battle):
     observation["opponent_active"] = copy.deepcopy(opponent_active)
     observation["opponent_team"] = copy.deepcopy(opponent_team)
     
-    
+    # Handle entry hazards -----------------------------
     side = battle.side_conditions
     
     field = dict()
@@ -152,6 +159,7 @@ def embed_battle(battle):
     
     return copy.deepcopy(observation)
 
+# return string for the status condition of the pokemon
 def getStatus(pkmn):
     status = pkmn.status
     if status == Status["BRN"]:
@@ -172,6 +180,7 @@ def getStatus(pkmn):
         return "none"
     
     
+# method to calculate utility of state
 def state_utility(state):
         state_value = 0
         
@@ -225,7 +234,7 @@ def state_utility(state):
         
         return state_value
     
-    
+# method to provide pokemon for agent to send out first    
 def teampreview(battle):
         pkmn_matchup = {}
 

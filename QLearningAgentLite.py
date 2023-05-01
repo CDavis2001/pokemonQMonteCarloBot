@@ -204,7 +204,7 @@ class QLearningLitePlayer(Player):
         self.firstturn = True
         return tp(battle)
 
-
+    # method to convert battle object to custom dict
     def embed_battle(battle):
         observation = dict()
     
@@ -267,6 +267,7 @@ class QLearningLitePlayer(Player):
     
         return copy.deepcopy(observation)
     
+    # method to calculate utility of state
     def state_utility(self, state):
         state_value = 0
         

@@ -59,17 +59,19 @@ class MonteCarloPlayer(Player):
         endstates = 0
         tests = 0
         while len(queue) > 0 and endstates < 50 and tests < 5000:
-            
+            # start with first node in queue
             node = queue.pop(0)
             self.tree.append(node)
             
+            # iterate through all untried actions
             for action in node.untried_actions:
                 
+                # produce list of children nodes by simulating action and append children to node and to queue
                 children = node.simulate(action)
                 for child in children:
                     tests+=1
                     node.children.append(child)
-            
+                    # if node is end state, update nodes on path
                     if child.is_end_state() != 0:
                         endstates += 1
                         child.back_propagate(child.is_end_state())
@@ -84,7 +86,7 @@ class MonteCarloPlayer(Player):
         self.plan = []
         node = copy.deepcopy(self.tree[0])
         while node.is_end_state() == 0:
-            
+            # traverse through tree picking node with maximum difference in wins and losses
             max_wl_diff = -2000000000
             step = []
             successor = None
@@ -111,7 +113,7 @@ class MonteCarloPlayer(Player):
             
             return(self.choose_random_move(battle))
         
-        
+        # follow plan to choose action
         action = self.plan[0]
         self.plan.pop(0)
         if action[1][0] == "use":

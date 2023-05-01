@@ -12,6 +12,7 @@ async def main():
     team = file.read()
     file.close()
     players = []
+    # comment out players that are not wanted to battle
     players.append(RandomPlayer(battle_format="gen8ou", team=team, start_timer_on_battle_start=True))
     players.append(MaxDamagePlayer(battle_format="gen8ou", team=team, start_timer_on_battle_start=True))
     players.append(MaxDamagePlanPlayer(battle_format="gen8ou", team=team, start_timer_on_battle_start=True))

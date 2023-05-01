@@ -13,15 +13,19 @@ from poke_env import PlayerConfiguration, ShowdownServerConfiguration
 
 
 async def main():
-    
+    # set username for agent to challenge
+    username = ""
     file = open("Teams/SpecsLelePult noswitchmoves.txt")
     team = file.read()
     file.close()
+    
+    # uncomment agent to issue challenge
+    
     #player = QLearningPlayer(battle_format="gen8ou",team=team)
     #player = MonteCarloPlayer(battle_format="gen8ou",team=team)
     #player = QLearningLitePlayer(battle_format="gen8ou",team=team)
     player = HybridHPSwitchPlayer(battle_format="gen8ou", team=team)
-    await player.send_challenges("antroz2001", n_challenges=1)
+    await player.send_challenges(username, n_challenges=1)
     
     
     
