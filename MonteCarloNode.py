@@ -9,7 +9,6 @@ class Node:
         self.action = action
         self.children = []
         self.endstate = False
-        self.num_visits = 0
         self.results = dict()
         self.results[1] = 0
         self.results[-1] = 0
